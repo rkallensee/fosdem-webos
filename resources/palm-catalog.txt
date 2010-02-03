@@ -1,0 +1,16 @@
+This application is a simple schedule for FOSDEM 2010 (Free and Open source Software Developers' European Meeting) in Brussels. It downloads the schedule from FOSDEM server, saves it to your device and shows a list of events. So you can use the schedule offline.
+
+Features:
+- Stores schedule on the device after refresh.
+- Shows event details after tap on headline.
+- Simply start typing to perform a quick search.
+- Hide events which are already expired.
+- Integrated campus map.
+
+This application is licensed under the GPL v3.
+
+
+
+Support E-Mail: rk@webpresso.net
+Support Web: http://raphael.kallensee.name/journal/fosdem-2010-schedule-application-for-webos
+
