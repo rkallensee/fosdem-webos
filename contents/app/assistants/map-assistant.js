@@ -42,6 +42,9 @@ MapAssistant.prototype.activate = function(event) {
     this.myCampusMapView.mojo.centerUrlProvided('images/campus.png');
 }
 
+MapAssistant.prototype.orientationChanged = function(orientation) {
+	this.activate();
+}
 
 MapAssistant.prototype.deactivate = function(event) {
 	/* remove any event handlers you added in activate and do any other cleanup that should happen before
