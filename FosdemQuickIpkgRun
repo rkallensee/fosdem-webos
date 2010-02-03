@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# close and remove old versions
+palm-launch -c net.webpresso.fosdem2010
+palm-install -r net.webpresso.fosdem2010
+
+# package, install and run HelloWorld app on palm emulator
+palm-package FosdemSchedule
+palm-install net.webpresso.fosdem2010_0.1.0_all.ipk
+palm-launch net.webpresso.fosdem2010

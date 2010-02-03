@@ -1,0 +1,9 @@
+{
+	"id": "net.webpresso.fosdem2010",
+	"version": "0.1.0",
+	"vendor": "My Company",
+	"type": "web",
+	"main": "index.html",
+	"title": "FOSDEM 2010 Schedule",
+	"icon": "icon.png"
+}
