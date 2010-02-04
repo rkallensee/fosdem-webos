@@ -68,6 +68,7 @@ ScheduleAssistant.prototype.setup = function() {
             dividerTemplate: 'schedule/list/divider', 
             dividerFunction: this.dividerFunc.bind(this),
             filterFunction: this.filterFunction.bind(this),
+            renderLimit: 500, // should become lazy list one day
             delay: 1000 // 1 second delay before filter string is used
         },
         this.listModel
