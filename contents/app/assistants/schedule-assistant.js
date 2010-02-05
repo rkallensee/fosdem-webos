@@ -34,7 +34,7 @@ ScheduleAssistant.prototype.setup = function() {
 	    {
 	        items: [ 
 	            { label: $L('Refresh'), icon: 'refresh', command: 'cmdRefresh' },
-	            { label: $L('hide expired'), command:'cmdHideExpired' }
+	            { label: $L('Hide expired events'), command:'cmdHideExpired' }
 	        ] 
         }
     );
@@ -76,11 +76,9 @@ ScheduleAssistant.prototype.setup = function() {
 	
 	this.controller.listen('schedule_list',Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
 	
-    this.spinnerModel = {
-		spinning: true
-	}
+    this.spinnerModel = { spinning: true }
     
-    this.controller.setupWidget("schedule_spinner", {spinnerSize: 'small'}, this.spinnerModel);
+    this.controller.setupWidget("schedule_spinner", {spinnerSize: 'large'}, this.spinnerModel);
 }
 
 ScheduleAssistant.prototype.dbInitialized = function( result ) {
@@ -102,7 +100,6 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
                 if( value == 'refresh' ) {
                     that.refreshSchedule();
                 } else {
-                    //stop the animation and hide the spinner
                     that.spinnerModel.spinning = false;
                     that.controller.modelChanged(that.spinnerModel);
                 }
@@ -125,7 +122,9 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
     //console.log("***** THERE ARE "+items.length+" items!");
     
     if( items.length == 0 ) {
-        Mojo.Controller.errorDialog($L('No events found. If you tapped "hide expired", there are no upcoming events. If you tried to refresh events, the request failed - please refresh again.'));
+        Mojo.Controller.errorDialog($L('No events found. If you tapped "Hide expired events", there are no upcoming events. If you tried to refresh events, the request failed - please refresh again.'));
+        that.spinnerModel.spinning = false;
+        that.controller.modelChanged(that.spinnerModel);
         return;
     }
     
@@ -138,7 +137,6 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
     that.listModel.items = that.scheduleItems;
     that.controller.modelChanged(that.listModel);
 
-    //stop the animation and hide the spinner
     that.spinnerModel.spinning = false;
     that.controller.modelChanged(that.spinnerModel);
 }
@@ -254,16 +252,15 @@ ScheduleAssistant.prototype.listTapped = function(event){
 ScheduleAssistant.prototype.refreshSchedule = function() {
     //console.log("***** STARTING REFRESH SCHEDULE...");
 
-    //show and start the animated spinner
     this.spinnerModel.spinning = true;
-	this.controller.modelChanged(this.spinnerModel);
+    this.controller.modelChanged(this.spinnerModel);
 	
     this.controller.serviceRequest('palm://com.palm.connectionmanager', {
 	    method: 'getstatus',
 	    parameters: {subscribe:false},
 	    onSuccess: function(response) {
 	        if( response.isInternetConnectionAvailable !== true ) {
-	            Mojo.Controller.errorDialog($L('<b>Can\'t connect to FOSDEM server.</b><br /><br />Please make sure your internet connection is available.'));
+	            Mojo.Controller.errorDialog($L('Can\'t connect to FOSDEM server. Please make sure your internet connection is available.'));
 	        }
 	    },
 	    onFailure: function(response) {
@@ -349,14 +346,14 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
 ScheduleAssistant.prototype.hideExpired = function() {
     //console.log("***** STARTING HIDING EXPIRED...");
 
-    var items = this.scheduleItems;
-    this.scheduleItems = [];
-    
-    var date = new Date();
+    this.spinnerModel.spinning = true;
+    this.controller.modelChanged(this.spinnerModel);
 
-    for( var i=0; i<items.length; i++ ) {
-        
-        var xcaldate = this.parseDate( items[i].dtstart );
+    this.scheduleItems = this.scheduleItems.filter( function( element, index, array ) {
+        var date = new Date();
+        //var date = new Date(2010, 02, 06, 15, 30, 00);
+            
+        var xcaldate = that.parseDate( element.dtstart );
         var dtstart = new Date( 
             xcaldate.year,
             xcaldate.month,
@@ -369,12 +366,20 @@ ScheduleAssistant.prototype.hideExpired = function() {
         var diffHours = Math.round( (date-dtstart) / (1000*60*60 ) );
         
         if( diffHours < 1 ) { // use a tolerance of one hour
-            this.scheduleItems.push( items[i] );
+            return true;
         }
         
-    }
+        return false;
+    } );
+    
+    //this.setEventItems( this.scheduleItems );
+    
+    this.listModel.items = this.scheduleItems;
+    this.controller.modelChanged(this.listModel);
 
-    this.setEventItems( this.scheduleItems );
+    //stop the animation and hide the spinner
+    this.spinnerModel.spinning = false;
+    this.controller.modelChanged(this.spinnerModel);
 }
 
 ScheduleAssistant.prototype.parseDate = function(xCalDate){

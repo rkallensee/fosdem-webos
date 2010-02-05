@@ -15,4 +15,7 @@
 }
 
 #schedule_spinner {
+    position: fixed;
+    left: 100px;
+    top: 100px;
 }
