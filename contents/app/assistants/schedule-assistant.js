@@ -17,6 +17,11 @@ ScheduleAssistant.prototype.setup = function() {
 	
 	//console.log("***** INITIALIZING SCHEDULE...");
 	
+	// this setting is very important: it stores the name of the conference!
+	//this.conference = 'FOSDEM';
+	this.conference = 'FrOSCon';
+	this.conferenceYear = '2010';
+	
 	this.appMenuModel = {
 		visible: true,
 		items: [
@@ -30,23 +35,38 @@ ScheduleAssistant.prototype.setup = function() {
 	
     this.controller.setupWidget(
         Mojo.Menu.commandMenu, 
-        undefined, 
+        this.attributes = {
+            //spacerHeight: 0,
+            //menuClass: 'no-fade'
+        }, 
 	    {
+	        visible: true,
 	        items: [ 
 	            { label: $L('Refresh'), icon: 'refresh', command: 'cmdRefresh' },
-	            { label: $L('Hide expired events'), command:'cmdHideExpired' }
+	            //{ label: $L('Hide expired events'), command:'cmdShowUpcoming' } // HIDE EXPIRED CURRENTLY DISABLED
+
+	            {label: $L('View options'), toggleCmd: 'cmdShowAll', items: [
+	                { label: $L('Show all'), icon: 'favallbtn', command: 'cmdShowAll' },
+					{ label: $L('Show only favorites'), icon: 'favbtn', command: 'cmdShowFavs' }
+				]}
 	        ] 
         }
     );
     
+    // overall schedule items
     this.scheduleItems = [];
+    
+    // schedule items currently visible
+    this.scheduleItemsShown = [];
+    
+    this.dbInitializedState = false;
     
     that = this; // this allows accessing the assistent object from other scopes. Ugly!
     
     // open database storage
 	this.depot = new Mojo.Depot(
 	    {
-		    name: "fosdemSchedule", // Name used for the HTML5 database name. (required)
+		    name: that.conference + "Schedule", // Name used for the HTML5 database name. (required)
 		    replace: false // open an existing depot
 	    }, 
 	    that.dbInitialized,
@@ -55,8 +75,8 @@ ScheduleAssistant.prototype.setup = function() {
     
     // Set up a few models so we can test setting the widget model:
 	this.listModel = {
-	    listTitle: $L('FOSDEM 2010 Schedule'), 
-	    items: this.scheduleItems
+	    listTitle: this.conference + ' ' + this.conferenceYear + ' ' + $L('Schedule'), 
+	    items: this.scheduleItemsShown // not necessary for lazy list
     };
 	
 	// Set up the attributes & model for the List widget:
@@ -68,17 +88,25 @@ ScheduleAssistant.prototype.setup = function() {
             dividerTemplate: 'schedule/list/divider', 
             dividerFunction: this.dividerFunc.bind(this),
             filterFunction: this.filterFunction.bind(this),
-            renderLimit: 500, // should become lazy list one day
+            //itemsCallback:this.itemsCallback.bind(this),
+            renderLimit: 1000, // 200 for lazy one
+            //lookahead: 15,
             delay: 1000 // 1 second delay before filter string is used
         },
         this.listModel
     );
 	
-	this.controller.listen('schedule_list',Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
+	this.controller.listen('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
 	
     this.spinnerModel = { spinning: true }
     
     this.controller.setupWidget("schedule_spinner", {spinnerSize: 'large'}, this.spinnerModel);
+    
+    // setup favorite checkbox widgets in item details drawer
+    this.controller.setupWidget('listCheckBox', {modelProperty: 'favorite'});
+    
+    // bind propertyChange event of list model to handler (used for favorites)
+    this.controller.listen('schedule_list', Mojo.Event.propertyChange, this.listPropertyChanged.bindAsEventListener(this));
 }
 
 ScheduleAssistant.prototype.dbInitialized = function( result ) {
@@ -105,7 +133,7 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
                 }
             },
             title: $L("Welcome!"),
-            message: $L("There is currently no FOSDEM schedule stored on your phone. Do you want to download it now? Please use the help function in application menu for more information."),
+            message: $L("There is currently no schedule stored on your phone. Do you want to download it now? Please use the help function in application menu for more information."),
             choices:[
                  {label:$L('Yes'), value:"refresh", type:'affirmative'},  
                  {label:$L("No"), value:"well", type:'negative'}
@@ -131,19 +159,56 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
     items.sort( that.orderSchedule );
         
 	that.scheduleItems = items;
+	that.scheduleItemsShown = items;
+	
+	this.dbInitializedState = true;
 	
     //console.log("***** SETTING ITEMS: " + items.length);
     
-    that.listModel.items = that.scheduleItems;
+    that.listModel.items = that.scheduleItemsShown;
     that.controller.modelChanged(that.listModel);
+    
+    that.refreshFavStars();
 
     that.spinnerModel.spinning = false;
     that.controller.modelChanged(that.spinnerModel);
 }
 
+ScheduleAssistant.prototype.refreshFavStars = function() {
+	for( var i=0; i<that.scheduleItemsShown.length; i++ ) {
+        if( that.scheduleItemsShown[i].favorite == true ) {
+            jQuery('#star-'+that.scheduleItemsShown[i].id).addClass('starActive');
+        } else {
+            jQuery('#star-'+that.scheduleItemsShown[i].id).removeClass('starActive');
+        }
+    }
+}
+
 ScheduleAssistant.prototype.dbError = function( transaction, result ) {
 	Mojo.Controller.errorDialog($L('A database error occured!'));
 	//console.log("***** DB ERROR:");
+}
+
+ScheduleAssistant.prototype.itemsCallback = function(listWidget, offset, count) {	
+        
+        // TODO: Lazy feature doesn't work atm (never gets called?!).
+        
+		if( that.dbInitializedState == false ) {
+		    that.itemsCallback.delay(1, listWidget, offset, count);
+		}
+		
+		console.log("offset = " + offset);
+		console.log("count = " + count);
+		console.log("list length = " + that.scheduleItemsShown.length);
+
+		that.updateListWithNewItems(listWidget, offset, that.scheduleItemsShown.slice(offset, offset+count));
+		
+		// It's okay to call this every time, but only the first call will have any affect.
+		listWidget.mojo.setLength(that.scheduleItemsShown.length);
+}
+	
+ScheduleAssistant.prototype.updateListWithNewItems = function(listWidget, offset, items) {
+    listWidget.mojo.noticeUpdatedItems(offset, items);
 }
 
 ScheduleAssistant.prototype.dividerFunc = function(itemModel) {
@@ -156,15 +221,15 @@ ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, 
 	
 	//loop through the original data set & get the subset of items that have the filterstring 
 	var i = 0;
-	while( i <  this.scheduleItems.length ) {
+	while( i <  this.scheduleItemsShown.length ) {
 		
-        if( this.scheduleItems[i].time.toLowerCase().include(filterString.toLowerCase())
-         || this.scheduleItems[i].location.toLowerCase().include(filterString.toLowerCase())
-         || this.scheduleItems[i].title.toLowerCase().include(filterString.toLowerCase())
-         || this.scheduleItems[i].attendee.toLowerCase().include(filterString.toLowerCase())
+        if( this.scheduleItemsShown[i].time.toLowerCase().include(filterString.toLowerCase())
+         || this.scheduleItemsShown[i].location.toLowerCase().include(filterString.toLowerCase())
+         || this.scheduleItemsShown[i].title.toLowerCase().include(filterString.toLowerCase())
+         || this.scheduleItemsShown[i].attendee.toLowerCase().include(filterString.toLowerCase())
         ) {
 			if( subset.length < count && totalSubsetSize >= offset) {
-				subset.push( this.scheduleItems[i] );
+				subset.push( this.scheduleItemsShown[i] );
 			}
 			totalSubsetSize++;
 		}
@@ -229,8 +294,14 @@ ScheduleAssistant.prototype.handleCommand = function(event) {
 			case 'cmdRefresh':
 				this.refreshSchedule();
 			    break;
-			case 'cmdHideExpired':
-				this.hideExpired();
+			case 'cmdShowAll':
+				this.showFiltered('all');
+			    break;
+			case 'cmdShowFavs':
+				this.showFiltered('favs');
+			    break;
+			case 'cmdShowUpcoming':
+				this.showFiltered('upcoming');
 			    break;
 			case 'cmdHelp':
 				Mojo.Controller.stageController.pushScene("help");
@@ -260,7 +331,7 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
 	    parameters: {subscribe:false},
 	    onSuccess: function(response) {
 	        if( response.isInternetConnectionAvailable !== true ) {
-	            Mojo.Controller.errorDialog($L('Can\'t connect to FOSDEM server. Please make sure your internet connection is available.'));
+	            Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
 	        }
 	    },
 	    onFailure: function(response) {
@@ -269,8 +340,12 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
 	});
 	
     //console.log("***** STARTING AJAX REQUEST...");
+    
+    //var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
+    //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
+    var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
 
-    var request = new Ajax.Request("http://www.fosdem.org/schedule/xcal", {
+    var request = new Ajax.Request(xcalURL, {
 
         method: 'get',
         evalJSON: 'false',
@@ -278,7 +353,7 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
             that.incubateSetAndSaveResponse( transport );
         },
         onFailure: function(){  
-            Mojo.Controller.errorDialog($L('Can\'t connect to FOSDEM server. Please make sure your internet connection is available.'));
+            Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
         }
 
     });
@@ -293,7 +368,16 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
     
     eventCounter = 0;
     
+    // temporarily save favorites' uid here to reassign state later
+    that.tempFavorites = [];  // TODO: Store favs in depot?
+    for( var i=0; i<that.scheduleItems.length; i++ ) {
+        if( that.scheduleItems[i].favorite == true ) {
+            that.tempFavorites.push(that.scheduleItems[i].eventid);
+        }
+    }
+    
     that.scheduleItems = [];
+    that.scheduleItemsShown = [];
     
     // Find each 'vevent' node
     jQuery(transport.responseXML.documentElement).find('vevent').each(function() {
@@ -307,24 +391,34 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
             url = url.replace( "/2010/schedule/", "" );
         }
         
+        var isFavorite = jQuery.inArray(
+            jQuery(this).children('uid').text(),
+            that.tempFavorites
+        ) >= 0; // returns -1 if not found, otherwise the index
+        
         that.scheduleItems.push({
             id: eventCounter,
-            date:$L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year), 
-            dtstart:$L(jQuery(this).children('dtstart').text()), 
-            time:$L(dateObj.hour + ':' + dateObj.minute), 
+            date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year), 
+            dtstart: $L(jQuery(this).children('dtstart').text()), 
+            time: $L(dateObj.hour + ':' + dateObj.minute), 
             location: $L(jQuery(this).children('location').text()), 
-            title:$L(jQuery(this).children('summary').text()), 
-            description:$L(jQuery(this).children('description').text()),
-            attendee:$L(jQuery(this).children('attendee').text()),
-            url:url
+            title: $L(jQuery(this).children('summary').text()), 
+            description: $L(jQuery(this).children('description').text()),
+            attendee: $L(jQuery(this).children('attendee').text()),
+            url: url,
+            eventid: jQuery(this).children('uid').text(),
+            pbfeventid: jQuery(this).children("[nodeName=pentabarf:event-id]").text(),
+            favorite: isFavorite
         });
+        
+        that.scheduleItemsShown = that.scheduleItems;
         
         eventCounter++;
     });
 
     //console.log("***** INCUBATED, NOW SETTING...");
 
-    this.setEventItems( that.scheduleItems );
+    this.setEventItems( that.scheduleItemsShown );
     
     if( that.scheduleItems.length > 0 ) {
         // save to db if there are results
@@ -333,7 +427,7 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
             { items: that.scheduleItems }, 
             function() {
                 Mojo.Controller.getAppController().showBanner(
-                    $L("Refreshed FOSDEM schedule items."),
+                    $L("Refreshed schedule items."),
                     { source: 'notification' }
                 );
                 //console.log("***** SUCCESSFULLY SAVED.");
@@ -343,50 +437,114 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
     }
 }
 
-ScheduleAssistant.prototype.hideExpired = function() {
+ScheduleAssistant.prototype.showFiltered = function(type) {
+    // type = all, favs, upcoming
+    
     //console.log("***** STARTING HIDING EXPIRED...");
 
     this.spinnerModel.spinning = true;
     this.controller.modelChanged(this.spinnerModel);
 
-    this.scheduleItems = this.scheduleItems.filter( function( element, index, array ) {
-        var date = new Date();
-        //var date = new Date(2010, 02, 06, 15, 30, 00);
+    switch( type ) {
+        
+        case 'favs':
+            this.scheduleItemsShown = this.scheduleItems.filter( function( element, index, array ) {
+                if( element.favorite == true ) {
+                    return true;
+                }
+                return false;
+            } );
+            break;
+        
+        case 'upcoming':
+            this.scheduleItemsShown = this.scheduleItems.filter( function( element, index, array ) {
+                var date = new Date();
+                //var date = new Date(2010, 02, 06, 15, 30, 00);
+                    
+                var xcaldate = that.parseDate( element.dtstart );
+                var dtstart = new Date( 
+                    xcaldate.year,
+                    xcaldate.month,
+                    xcaldate.day,
+                    xcaldate.hour,
+                    xcaldate.minute,
+                    00
+                );
+                
+                var diffHours = Math.round( (date-dtstart) / (1000*60*60 ) );
+                
+                if( diffHours < 1 ) { // use a tolerance of one hour
+                    return true;
+                }
+                
+                return false;
+            } );
+            break;
             
-        var xcaldate = that.parseDate( element.dtstart );
-        var dtstart = new Date( 
-            xcaldate.year,
-            xcaldate.month,
-            xcaldate.day,
-            xcaldate.hour,
-            xcaldate.minute,
-            00
-        );
-        
-        var diffHours = Math.round( (date-dtstart) / (1000*60*60 ) );
-        
-        if( diffHours < 1 ) { // use a tolerance of one hour
-            return true;
-        }
-        
-        return false;
-    } );
+        case 'all':
+        default:
+            // TODO: set filter back - maybe like filterFunction OR with disabled property of list?
+            // Also make sure saving favorites in fav filter mode doesn't clear all
+            // of the non-fav entries.
+            this.scheduleItemsShown = this.scheduleItems;
+            break;
+            
+    }
     
     //this.setEventItems( this.scheduleItems );
     
-    this.listModel.items = this.scheduleItems;
+    this.listModel.items = this.scheduleItemsShown;
     this.controller.modelChanged(this.listModel);
+    
+    // re-set star states
+    this.refreshFavStars();
 
     //stop the animation and hide the spinner
     this.spinnerModel.spinning = false;
     this.controller.modelChanged(this.spinnerModel);
 }
 
+// only "favorite" list property changes. this is handled here.
+ScheduleAssistant.prototype.listPropertyChanged = function(event) {
+    for( var i=0; i<this.scheduleItems.length; i++ ) {
+        if( event.model.eventid == this.scheduleItems[i].eventid ) {
+            
+            if( event.value == true ) {
+                jQuery('#star-'+event.model.id).addClass('starActive');
+                this.scheduleItems[i].favorite = true;
+            } else {
+                jQuery('#star-'+event.model.id).removeClass('starActive');
+                this.scheduleItems[i].favorite = false;
+            }
+        }
+        
+        // set open property to false to prevent saving drawer
+        // open/close state
+        this.scheduleItems[i].open = false;
+    }
+    
+    // save modified data to db
+    this.depot.simpleAdd(
+        'schedule', 
+        { items: this.scheduleItems }, 
+        function() {
+            //Mojo.Controller.getAppController().showBanner(
+            //    $L("Saved favorite change."),
+            //    { source: 'notification' }
+            //);
+            //console.log("***** SUCCESSFULLY SAVED.");
+        }, 
+        this.dbError 
+    );
+    
+    //console.log(event.property+"#"+event.value+"##"+event.model.eventid+"###"+event.model.pbfeventid);
+}
+
 ScheduleAssistant.prototype.parseDate = function(xCalDate){
     var months = new Array(
-        'January', 'February', 'March', 'April', 'May', 
-        'June', 'July', 'August', 'September', 'October', 
-        'November', 'December'
+        $L('January'), $L('February'), $L('March'), $L('April'),
+        $L('May'), $L('June'), $L('July'), $L('August'),
+        $L('September'), $L('October'), $L('November'), $L('December')
     );
 
     return {

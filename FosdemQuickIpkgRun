@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # close and remove old versions
-palm-launch -c net.webpresso.fosdem2010
-palm-install -r net.webpresso.fosdem2010
+palm-launch -c net.webpresso.froscon2010
+palm-install -r net.webpresso.froscon2010
 
-# package, install and run HelloWorld app on palm emulator
+# package, install and run FrOSCon app on palm emulator
 palm-package contents
-palm-install net.webpresso.fosdem2010_0.1.3_all.ipk
-palm-launch net.webpresso.fosdem2010
+palm-install net.webpresso.froscon2010_0.1.4_all.ipk
+palm-launch net.webpresso.froscon2010

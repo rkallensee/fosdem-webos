@@ -1,0 +1,35 @@
+Campus map
+Help / About
+Refresh
+View options
+Show all
+Show only favorites
+Schedule
+
+There is currently no schedule stored on your phone. Do you want to download it now? Please use the help function in application menu for more information.
+
+Yes
+No
+
+No events found. If you tapped "Hide expired events", there are no upcoming events. If you tried to refresh events, the request failed - please refresh again.
+
+A database error occured!
+
+Can't connect to server. Please make sure your internet connection is available.
+
+Failed to get connection status. Please try again.
+
+Refreshed schedule items.
+
+January
+February
+March
+April
+May
+June
+July
+August
+September
+October
+November
+December
