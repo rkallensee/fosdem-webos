@@ -22,24 +22,26 @@ ScheduleAssistant.prototype.setup = function() {
 	this.conference = 'FrOSCon';
 	this.conferenceYear = '2010';
 	
-	this.appMenuModel = {
-		visible: true,
-		items: [
-			Mojo.Menu.editItem,
-			{ label: $L('Campus map'), command: 'cmdMap' },
-    		{ label: $L('Help / About'), command: 'cmdHelp' }
-		]
-	};
-
-	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, this.appMenuModel);
+	this.controller.setupWidget(
+	    Mojo.Menu.appMenu, 
+	    { omitDefaultItems: true }, 
+	    {
+		    visible: true,
+		    items: [
+			    Mojo.Menu.editItem,
+			    { label: $L('Campus map'), command: 'cmdMap' },
+        		{ label: $L('Help / About'), command: 'cmdHelp' }
+		    ]
+	    }
+	);
 	
     this.controller.setupWidget(
         Mojo.Menu.commandMenu, 
-        this.attributes = {
+        {
             //spacerHeight: 0,
             //menuClass: 'no-fade'
         }, 
-	    {
+	    this.viewFilterMenuModel = {
 	        visible: true,
 	        items: [ 
 	            { label: $L('Refresh'), icon: 'refresh', command: 'cmdRefresh' },
@@ -103,7 +105,7 @@ ScheduleAssistant.prototype.setup = function() {
     this.controller.setupWidget("schedule_spinner", {spinnerSize: 'large'}, this.spinnerModel);
     
     // setup favorite checkbox widgets in item details drawer
-    this.controller.setupWidget('listCheckBox', {modelProperty: 'favorite'});
+    this.controller.setupWidget('listCheckBox', {property: 'favorite', modelProperty: 'favorite'});
     
     // bind propertyChange event of list model to handler (used for favorites)
     this.controller.listen('schedule_list', Mojo.Event.propertyChange, this.listPropertyChanged.bindAsEventListener(this));
@@ -411,14 +413,8 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
             favorite: isFavorite
         });
         
-        that.scheduleItemsShown = that.scheduleItems;
-        
         eventCounter++;
     });
-
-    //console.log("***** INCUBATED, NOW SETTING...");
-
-    this.setEventItems( that.scheduleItemsShown );
     
     if( that.scheduleItems.length > 0 ) {
         // save to db if there are results
@@ -426,10 +422,18 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
             'schedule', 
             { items: that.scheduleItems }, 
             function() {
+                that.scheduleItemsShown = that.scheduleItems;
+                //console.log("***** INCUBATED, NOW SETTING...");
+                that.setEventItems( that.scheduleItemsShown );
+                
                 Mojo.Controller.getAppController().showBanner(
                     $L("Refreshed schedule items."),
                     { source: 'notification' }
                 );
+                
+                that.viewFilterMenuModel.items[1].toggleCmd = 'cmdShowAll';
+                that.controller.modelChanged(that.viewFilterMenuModel);
+                
                 //console.log("***** SUCCESSFULLY SAVED.");
             }, 
             this.dbError 
