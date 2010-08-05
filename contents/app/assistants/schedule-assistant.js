@@ -214,7 +214,19 @@ ScheduleAssistant.prototype.updateListWithNewItems = function(listWidget, offset
 }
 
 ScheduleAssistant.prototype.dividerFunc = function(itemModel) {
-	return itemModel.date; // We're using the item's date as the divider label.
+    // We're using the localized item's date as the divider label.
+    
+    var dateDetails = this.parseDate( itemModel.dtstart );
+    var dateObj = new Date( 
+        dateDetails.year,
+        dateDetails.month,
+        dateDetails.day,
+        dateDetails.hour,
+        dateDetails.minute,
+        00
+    );
+    
+	return Mojo.Format.formatDate( dateObj, {date: 'long'} );
 }
 
 ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, offset, count) {
@@ -242,6 +254,8 @@ ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, 
 	
 	//update the items in the list with the subset
 	listWidget.mojo.noticeUpdatedItems( offset, subset );
+	
+	this.refreshFavStars();
 	
 	//set the list's lenght & count if we're not repeating the same filter string from an earlier pass
 	if( this.filter !== filterString ) {
@@ -425,6 +439,8 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
                 that.scheduleItemsShown = that.scheduleItems;
                 //console.log("***** INCUBATED, NOW SETTING...");
                 that.setEventItems( that.scheduleItemsShown );
+                
+                that.controller.instantiateChildWidgets($('schedule_list'));
                 
                 Mojo.Controller.getAppController().showBanner(
                     $L("Refreshed schedule items."),
