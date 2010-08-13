@@ -29,7 +29,7 @@ ScheduleAssistant.prototype.setup = function() {
 		    visible: true,
 		    items: [
 			    Mojo.Menu.editItem,
-			    { label: $L('Campus map'), command: 'cmdMap' },
+			    //{ label: $L('Campus map'), command: 'cmdMap' },
         		{ label: $L('Help / About'), command: 'cmdHelp' }
 		    ]
 	    }

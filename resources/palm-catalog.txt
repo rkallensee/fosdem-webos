@@ -1,3 +1,6 @@
+===== EN: FOSDEM 2010 =====
+
+
 This application is a simple schedule for FOSDEM 2010 (Free and Open source Software Developers' European Meeting) in Brussels. It downloads the schedule from FOSDEM server, saves it to your device and shows a list of events. So you can use the schedule offline.
 
 Features:
@@ -13,4 +16,45 @@ This application is licensed under the GPL v3.
 
 Support E-Mail: rk@webpresso.net
 Support Web: http://raphael.kallensee.name/journal/fosdem-2010-schedule-application-for-webos
+
+
+
+===== EN: FrOSCon 2010 =====
+
+
+This application was designed as a simple schedule for FrOSCon. It downloads the schedule from FrOSCon server and saves it to your device. So you can use the schedule offline. You can also set your favorite schedule items to plan your conference visit.
+
+Features:
+- Stores the downloaded schedule on the device.
+- Shows event details after tap on headline.
+- Mark event as favorite and switch between favorite and default view
+- Simply start typing to perform a quick search.
+
+This application is free software and licensed under the GPL v3.
+
+
+
+Support E-Mail: rk@webpresso.net
+Support Web: http://forge.webpresso.net/projects/fosdem-webos
+
+
+
+
+===== DE: FrOSCon 2010 =====
+
+
+Diese Anwendung wurde als einfache Programm-Anwendung für die FrOSCon entwickelt. Sie lädt das Programm vom FrOSCon-Server herunter und speichert es auf dem Gerät. Die Anwendung kann somit auch offline verwendet werden. Weiterhin können Veranstaltungen als Favoriten markiert werden. Dies erleichtert die Planung der Konferenz.
+
+Features:
+- Speichert das heruntergeladene Programm auf dem Gerät.
+- Zeigt Details zu einem Programmpunkt an.
+- Programmpunkte können als Favorit markiert werden. Es kann zwischen Favoriten- und Standardansicht gewechselt werden.
+- Zur Suche im Programm einfach einen Suchbegriff eintippen.
+
+Diese Anwendung ist freie Software und unter der GPL v3 lizensiert.
+
+
+
+Support E-Mail: rk@webpresso.net
+Support Web: http://forge.webpresso.net/projects/fosdem-webos
 
