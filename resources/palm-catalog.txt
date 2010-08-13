@@ -21,6 +21,11 @@ Support Web: http://raphael.kallensee.name/journal/fosdem-2010-schedule-applicat
 
 ===== EN: FrOSCon 2010 =====
 
+Title: FrOSCon 2010 Schedule
+Company name: webpresso.net
+Primary Category: Productivity & Utilities
+Secondary Tags: Lists
+
 
 This application was designed as a simple schedule for FrOSCon. It downloads the schedule from FrOSCon server and saves it to your device. So you can use the schedule offline. You can also set your favorite schedule items to plan your conference visit.
 
@@ -41,6 +46,11 @@ Support Web: http://forge.webpresso.net/projects/fosdem-webos
 
 
 ===== DE: FrOSCon 2010 =====
+
+Title: FrOSCon 2010 Programm
+Company name: webpresso.net
+Primary Category: Produktivität
+Secondary Tags: Listen
 
 
 Diese Anwendung wurde als einfache Programm-Anwendung für die FrOSCon entwickelt. Sie lädt das Programm vom FrOSCon-Server herunter und speichert es auf dem Gerät. Die Anwendung kann somit auch offline verwendet werden. Weiterhin können Veranstaltungen als Favoriten markiert werden. Dies erleichtert die Planung der Konferenz.
