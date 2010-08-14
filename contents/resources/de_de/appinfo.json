@@ -1,3 +1,9 @@
 {
-	"title": "FrOSCon 2010 Programm"
+	"id": "net.webpresso.froscon2010",
+	"version": "0.1.5",
+	"vendor": "webpresso.net",
+	"type": "web",
+	"main": "../../index.html",
+	"title": "FrOSCon 2010 Programm",
+	"icon": "../../icon.png"
 }
