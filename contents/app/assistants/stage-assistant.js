@@ -12,6 +12,9 @@ StageAssistant.prototype.handleCommand = function(event) {
 			case 'cmdSchedule':
 				this.controller.pushScene("schedule");
 			    break;
+		    case 'cmdFeeds':
+				this.controller.pushScene("feeds");
+			    break;
 			case 'cmdMap':
 				this.controller.pushScene("map");
 			    break;

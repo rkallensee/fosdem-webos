@@ -1,5 +1,6 @@
 [
     {"source": "lib/viewmenu-model.js"},
+    {"source": "lib/utils.js"},
     {"source": "app/assistants/stage-assistant.js"},
     {
         "scenes": "schedule",
@@ -24,5 +25,9 @@
     {
         "scenes": "tram",
         "source": "app/assistants/tram-assistant.js"
+    },
+    {
+        "scenes": "feeds",
+        "source": "app/assistants/feeds-assistant.js"
     }
 ]

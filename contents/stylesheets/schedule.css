@@ -30,7 +30,8 @@
 	margin-bottom: 10px;
 }
 
-#schedule_spinner {
+#schedule_spinner,
+#feeds_spinner {
     position: fixed;
     left: 100px;
     top: 100px;
@@ -43,3 +44,9 @@
 .favallbtn {
 	background: url(../images/emblem-favorite-all-btn.png) center no-repeat;
 }
+
+#FeedListContainer .palm-row-wrapper .title {
+	font-size: 0.9em;
+}
+
+

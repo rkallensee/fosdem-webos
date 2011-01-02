@@ -14,14 +14,17 @@ TramAssistant.prototype.setup = function() {
 	
 	this.controller.stageController.setWindowOrientation('free');
 	
-	this.appMenuModel = {
-		visible: true,
-		items: [
-			Mojo.Menu.editItem
-		]
-	};
-
-	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, this.appMenuModel);
+	this.controller.setupWidget(
+	    Mojo.Menu.appMenu, 
+	    { omitDefaultItems: true }, 
+	    {
+		    visible: true,
+		    items: [
+			    Mojo.Menu.editItem,
+        		{ label: $L('Help / About'), command: 'cmdHelp' }
+		    ]
+	    }
+	);
 	
 	this.controller.setupWidget('mapView', {}, {});
 	this.myMapView = $('mapView');
