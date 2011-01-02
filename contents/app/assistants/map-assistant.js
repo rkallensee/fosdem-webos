@@ -22,9 +22,7 @@ MapAssistant.prototype.setup = function() {
 
 	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, this.appMenuModel);
 	
-	var attributes = {};
-	this.mapmodel = {};
-	this.controller.setupWidget('campusMapView', attributes, this.mapmodel);
+	this.controller.setupWidget('campusMapView', {}, {});
 	this.myCampusMapView = $('campusMapView');
 	
 	// setup command menu
