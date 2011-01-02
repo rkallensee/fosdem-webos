@@ -19,8 +19,8 @@ ScheduleAssistant.prototype.setup = function() {
 	
 	// this setting is very important: it stores the name of the conference!
 	//this.conference = 'FOSDEM';
-	this.conference = 'FrOSCon';
-	this.conferenceYear = '2010';
+	this.conference = 'FOSDEM';
+	this.conferenceYear = '2011';
 	
 	this.controller.setupWidget(
 	    Mojo.Menu.appMenu, 
@@ -29,7 +29,7 @@ ScheduleAssistant.prototype.setup = function() {
 		    visible: true,
 		    items: [
 			    Mojo.Menu.editItem,
-			    //{ label: $L('Campus map'), command: 'cmdMap' },
+			    { label: $L('Campus map'), command: 'cmdMap' },
         		{ label: $L('Help / About'), command: 'cmdHelp' }
 		    ]
 	    }
@@ -357,9 +357,9 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
 	
     //console.log("***** STARTING AJAX REQUEST...");
     
-    //var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
+    var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
     //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
-    var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
+    //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
 
     var request = new Ajax.Request(xcalURL, {
 
@@ -405,6 +405,10 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
         if( url.indexOf( "/2010/schedule//2010/schedule/" ) != -1 ) {
             // fixing defect urls from xcal
             url = url.replace( "/2010/schedule/", "" );
+        }
+        if( url.indexOf( "/2011/schedule//2011/schedule/" ) != -1 ) {
+            // fixing defect urls from xcal
+            url = url.replace( "/2011/schedule/", "" );
         }
         
         var isFavorite = jQuery.inArray(
