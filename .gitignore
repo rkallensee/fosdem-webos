@@ -1,0 +1,6 @@
+# Ignore package files which are built via script in root directory.
+.*.ipk
+
+# Do not ignore package files in resources directory.
+!resources/*.ipk
+!resources/packages/*.ipk
