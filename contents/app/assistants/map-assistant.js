@@ -27,6 +27,28 @@ MapAssistant.prototype.setup = function() {
 	this.controller.setupWidget('campusMapView', attributes, this.mapmodel);
 	this.myCampusMapView = $('campusMapView');
 	
+	// setup command menu
+	this.controller.setupWidget(
+        Mojo.Menu.commandMenu, 
+        {}, 
+	    this.viewFilterMenuModel = {
+	        visible: true,
+	        items: [ 
+	            {
+	                label: $L('View menu'),
+			        items: [ {label: $L('Show'), submenu: 'view-submenu'} ]
+		        },
+	        ] 
+        }
+    );
+	
+	// setup view submenu, items come from lib/viewmenu-model.js
+	this.controller.setupWidget(
+        'view-submenu',
+        undefined,
+        ScheduleViewSubmenuModel
+    );
+	
 	/* add event handlers to listen to events from widgets */
 }
 

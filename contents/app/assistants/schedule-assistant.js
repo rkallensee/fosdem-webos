@@ -29,12 +29,12 @@ ScheduleAssistant.prototype.setup = function() {
 		    visible: true,
 		    items: [
 			    Mojo.Menu.editItem,
-			    { label: $L('Campus map'), command: 'cmdMap' },
         		{ label: $L('Help / About'), command: 'cmdHelp' }
 		    ]
 	    }
 	);
 	
+	// setup command menu
     this.controller.setupWidget(
         Mojo.Menu.commandMenu, 
         {
@@ -44,7 +44,13 @@ ScheduleAssistant.prototype.setup = function() {
 	    this.viewFilterMenuModel = {
 	        visible: true,
 	        items: [ 
+	            {
+	                label: $L('View menu'),
+			        items: [ {label: $L('Show'), submenu: 'view-submenu'} ]
+		        },
+	            
 	            { label: $L('Refresh'), icon: 'refresh', command: 'cmdRefresh' },
+	            
 	            //{ label: $L('Hide expired events'), command:'cmdShowUpcoming' } // HIDE EXPIRED CURRENTLY DISABLED
 
 	            {label: $L('View options'), toggleCmd: 'cmdShowAll', items: [
@@ -53,6 +59,13 @@ ScheduleAssistant.prototype.setup = function() {
 				]}
 	        ] 
         }
+    );
+	
+	// setup view submenu, items come from lib/viewmenu-model.js
+    this.controller.setupWidget(
+        'view-submenu',
+        undefined,
+        ScheduleViewSubmenuModel
     );
     
     // overall schedule items
@@ -318,12 +331,6 @@ ScheduleAssistant.prototype.handleCommand = function(event) {
 			    break;
 			case 'cmdShowUpcoming':
 				this.showFiltered('upcoming');
-			    break;
-			case 'cmdHelp':
-				Mojo.Controller.stageController.pushScene("help");
-			    break;
-			case 'cmdMap':
-				Mojo.Controller.stageController.pushScene("map");
 			    break;
 		}
 	}
