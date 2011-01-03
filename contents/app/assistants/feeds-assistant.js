@@ -103,7 +103,7 @@ FeedsAssistant.prototype.setup = function() {
     
     that = this; // this allows accessing the assistent object from other scopes. Ugly!
     
-    this.showFeed( 'twTag' );
+    this.showFeed( 'webFeed' );
 	
 	/* add event handlers to listen to events from widgets */
 };
