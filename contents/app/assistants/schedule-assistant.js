@@ -46,7 +46,7 @@ ScheduleAssistant.prototype.setup = function() {
 	        items: [ 
 	            {
 	                label: $L('View menu'),
-			        items: [ {label: $L('Show'), submenu: 'view-submenu'} ]
+			        items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
 		        },
 	            
 	            { label: $L('Refresh'), icon: 'refresh', command: 'cmdRefresh' },
@@ -61,7 +61,7 @@ ScheduleAssistant.prototype.setup = function() {
         }
     );
 	
-	// setup view submenu, items come from lib/viewmenu-model.js
+	// setup view submenu, items come from lib/submenu-model.js
     this.controller.setupWidget(
         'view-submenu',
         undefined,

@@ -11,6 +11,7 @@ MapAssistant.prototype.setup = function() {
 	/* use Mojo.View.render to render view templates and add them to the scene, if needed. */
 	
 	/* setup widgets here */
+	
 	this.controller.stageController.setWindowOrientation('free');
 	
 	this.controller.setupWidget(
@@ -37,17 +38,29 @@ MapAssistant.prototype.setup = function() {
 	        items: [ 
 	            {
 	                label: $L('View menu'),
-			        items: [ {label: $L('Show'), submenu: 'view-submenu'} ]
+			        items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
 		        },
+		        
+		        {
+	                label: $L('View options'),
+			        items: [ {label: $L('Select map'), submenu: 'maps-submenu'} ]
+		        }
 	        ] 
         }
     );
 	
-	// setup view submenu, items come from lib/viewmenu-model.js
+	// setup view submenu, items come from lib/submenu-model.js
 	this.controller.setupWidget(
         'view-submenu',
         undefined,
         ScheduleViewSubmenuModel
+    );
+    
+    // setup map submenu, items come from lib/submenu-model.js
+	this.controller.setupWidget(
+        'maps-submenu',
+        undefined,
+        MapViewSubmenuModel
     );
 	
 	/* add event handlers to listen to events from widgets */
@@ -77,4 +90,24 @@ MapAssistant.prototype.deactivate = function(event) {
 MapAssistant.prototype.cleanup = function(event) {
 	/* this function should do any cleanup needed before the scene is destroyed as 
 	   a result of being popped off the scene stack */
+}
+
+MapAssistant.prototype.handleCommand = function(event) {
+	if( event.type == Mojo.Event.command ) {
+		switch( event.command )
+		{
+			case 'cmdCampusMap':
+			    this.myCampusMapView.mojo.centerUrlProvided('images/campus.png');
+			    break;
+			case 'cmdNeighborhoodMap':
+				this.myCampusMapView.mojo.centerUrlProvided('images/neighborhood.png');
+			    break;
+		    case 'cmdMetroMap':
+				this.myCampusMapView.mojo.centerUrlProvided('images/20100628-plan_245_4000.png');
+			    break;
+			case 'cmdTramMap':
+				this.myCampusMapView.mojo.centerUrlProvided('images/brussels-trams.png');
+			    break;
+		}
+	}
 }

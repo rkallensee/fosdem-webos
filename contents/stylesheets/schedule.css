@@ -46,7 +46,11 @@
 }
 
 #FeedListContainer .palm-row-wrapper .title {
-	font-size: 0.9em;
+	font-size: 0.85em;
+}
+
+#ScheduleListContainer .palm-row-wrapper .preview {
+	margin-top: -10px;
 }
 
 

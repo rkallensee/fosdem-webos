@@ -34,28 +34,46 @@ FeedsAssistant.prototype.setup = function() {
 	        items: [ 
 	            {
 	                label: $L('View menu'),
-			        items: [ {label: $L('Show'), submenu: 'view-submenu'} ]
+			        items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
 		        },
+		        
+		        { label: $L('Refresh'), icon: 'refresh', command: 'cmdRefreshFeed' },
+	            
+	            {
+	                label: $L('View options'),
+			        items: [ {label: $L('Select feed'), submenu: 'feeds-submenu'} ]
+		        }
 	        ] 
         }
     );
 	
-	// setup view submenu, items come from lib/viewmenu-model.js
+	// setup view submenu, items come from lib/submenu-model.js
 	this.controller.setupWidget(
         'view-submenu',
         undefined,
         ScheduleViewSubmenuModel
     );
     
+    // setup feeds submenu, items come from lib/submenu-model.js
+	this.controller.setupWidget(
+        'feeds-submenu',
+        undefined,
+        FeedViewSubmenuModel
+    );
+    
     
     // set up sources
     this.feedSources = {
         webFeed: 'http://fosdem.org/rss.xml',
+        snAccount: 'http://identi.ca/api/statuses/user_timeline/116316.atom',
         snGroup: 'http://identi.ca/api/statusnet/groups/timeline/400.atom',
         snTag: 'http://identi.ca/api/statusnet/tags/timeline/fosdem.atom',
-        twAccount: 'http://twitter.com/statuses/user_timeline/10680142.rss',
+        twAccount: 'http://twitter.com/statuses/user_timeline/10680142.atom',
         twTag: 'http://search.twitter.com/search.atom?q=%23fosdem'
     };
+    
+    // keeps track of active feed (key)
+    this.activeFeed = '';
     
     // Set up a list model
 	this.listModel = {
@@ -85,7 +103,7 @@ FeedsAssistant.prototype.setup = function() {
     
     that = this; // this allows accessing the assistent object from other scopes. Ugly!
     
-    this.showFeed( this.feedSources.twTag );
+    this.showFeed( 'twTag' );
 	
 	/* add event handlers to listen to events from widgets */
 };
@@ -106,13 +124,14 @@ FeedsAssistant.prototype.cleanup = function(event) {
 };
 
 
-FeedsAssistant.prototype.showFeed = function( uri ) {
+FeedsAssistant.prototype.showFeed = function( feedId ) {
 	//console.log("***** START SETTING ITEMS... ");
 
     this.spinnerModel.spinning = true;
     this.controller.modelChanged(this.spinnerModel);
     
-    this.getFeedItems( uri );
+    this.activeFeed = feedId;
+    this.getFeedItems( this.feedSources[ feedId ] );
 }
 
 FeedsAssistant.prototype.getFeedItems = function( uri ) {
@@ -159,25 +178,36 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
     that.listModel.items = [];
     
     // Find each 'vevent' node
-    jQuery(transport.responseXML.documentElement).find('entry').each(function() {
+    jQuery(transport.responseXML.documentElement).find('entry, item').each(function() {
+        
+        var title = author = time = url = '';
+        
+        // set vars feed-type-specific, could be a bit handier...
+        if( that.activeFeed == 'webFeed' ) {
+            title = $L(jQuery(this).children('title').text());
+            author = 'FOSDEM team';
+            time = Date.parseHttpTimeFormat(jQuery(this).children('pubDate').text());
+            url = jQuery(this).children('link').text();
+        } else if( that.activeFeed == 'twTag'
+                || that.activeFeed == 'twAccount'
+                || that.activeFeed == 'snAccount'
+                || that.activeFeed == 'snGroup'
+                || that.activeFeed == 'snTag'
+        ) {
+            title = $L(jQuery(this).children('title').text());
+            author = jQuery(this).children('author').children('name').text();
+            time = Date.parseIso8601(jQuery(this).children('published').text());
+            url = jQuery(this).children('link[type="text/html"][rel="alternate"]').attr('href');
+        }
+        
+        time = jQuery.timeago(time);
         
         that.listModel.items.push({
             id: feedCounter,
-            title: $L(jQuery(this).children('title').text()),
-            author: jQuery(this).children('author').children('name').text(),
-            time: ScheduleUtils.prettyDate(jQuery(this).children('published').text()),
-            url: jQuery(this).children('link[type="text/html"][rel="alternate"]').attr('href')
-            /*date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year), 
-            dtstart: $L(jQuery(this).children('dtstart').text()), 
-            time: $L(dateObj.hour + ':' + dateObj.minute), 
-            location: $L(jQuery(this).children('location').text()), 
-            title: $L(jQuery(this).children('summary').text()), 
-            description: $L(jQuery(this).children('description').text()),
-            attendee: $L(jQuery(this).children('attendee').text()),
-            url: url,
-            eventid: jQuery(this).children('uid').text(),
-            pbfeventid: jQuery(this).children("[nodeName=pentabarf:event-id]").text(),
-            favorite: isFavorite*/
+            title: title,
+            author: author,
+            time: time,
+            url: url
         });
         
         feedCounter++;
@@ -197,10 +227,10 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
         
         that.controller.instantiateChildWidgets($('feed_list'));
         
-        Mojo.Controller.getAppController().showBanner(
-            $L("Refreshed feed items."),
-            { source: 'notification' }
-        );
+        //Mojo.Controller.getAppController().showBanner(
+        //    $L("Refreshed feed items."),
+        //    { source: 'notification' }
+        //);
 
     }
 }
@@ -209,4 +239,33 @@ FeedsAssistant.prototype.listTapped = function(event){
 	try {
 		window.location = event.item.url;
 	} catch (e) {}
+}
+
+FeedsAssistant.prototype.handleCommand = function(event) {
+	if( event.type == Mojo.Event.command ) {
+		switch( event.command )
+		{
+			case 'cmdRefreshFeed':
+			    this.showFeed( this.activeFeed );
+			    break;
+			case 'cmdFeedWebsite':
+				this.showFeed( 'webFeed' );
+			    break;
+		    case 'cmdFeedSnAccount':
+				this.showFeed( 'snAccount' );
+			    break;
+			case 'cmdFeedSnGroup':
+				this.showFeed( 'snGroup' );
+			    break;
+			case 'cmdFeedSnTag':
+				this.showFeed( 'snTag' );
+			    break;
+			case 'cmdFeedTwAccount':
+				this.showFeed( 'twAccount' );
+			    break;
+			case 'cmdFeedTwTag':
+				this.showFeed( 'twTag' );
+			    break;
+		}
+	}
 }

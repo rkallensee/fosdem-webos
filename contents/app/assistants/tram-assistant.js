@@ -44,7 +44,7 @@ TramAssistant.prototype.setup = function() {
         }
     );
 	
-	// setup view submenu, items come from lib/viewmenu-model.js
+	// setup view submenu, items come from lib/submenu-model.js
 	this.controller.setupWidget(
         'view-submenu',
         undefined,

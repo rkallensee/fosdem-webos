@@ -1,5 +1,5 @@
 [
-    {"source": "lib/viewmenu-model.js"},
+    {"source": "lib/submenu-model.js"},
     {"source": "lib/utils.js"},
     {"source": "app/assistants/stage-assistant.js"},
     {
@@ -29,5 +29,13 @@
     {
         "scenes": "feeds",
         "source": "app/assistants/feeds-assistant.js"
+    },
+    {
+        "scenes": "feeds",
+        "source": "lib/DP_DateExtensions.js"
+    },
+    {
+        "scenes": "feeds",
+        "source": "lib/jquery.timeago.js"
     }
 ]

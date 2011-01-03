@@ -18,6 +18,7 @@ StageAssistant.prototype.handleCommand = function(event) {
 			case 'cmdMap':
 				this.controller.pushScene("map");
 			    break;
+			    /*
 			case 'cmdNeighborhoodMap':
 				this.controller.pushScene("neighborhood");
 			    break;
@@ -30,6 +31,7 @@ StageAssistant.prototype.handleCommand = function(event) {
 			case 'cmdHelp':
 				this.controller.pushScene("help");
 			    break;
+			    */
 		}
 	}
 }
