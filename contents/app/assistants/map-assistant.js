@@ -26,8 +26,8 @@ MapAssistant.prototype.setup = function() {
 	    }
 	);
 
-	this.controller.setupWidget('campusMapView', {}, {});
-	this.myCampusMapView = $('campusMapView');
+	this.controller.setupWidget('mapView', {}, {});
+	this.myMapView = $('mapView');
 	
 	// setup command menu
 	this.controller.setupWidget(
@@ -71,11 +71,11 @@ MapAssistant.prototype.activate = function(event) {
 	   example, key handlers that are observing the document */
     
     var width  = window.innerWidth;
-	var height = window.innerHeight - parseInt(jQuery('#campusMapView').offset().top, 10);
+	var height = window.innerHeight - parseInt(jQuery('#mapView').offset().top, 10);
  
-	this.myCampusMapView.mojo.manualSize(width, height);
+	this.myMapView.mojo.manualSize(width, height);
     
-    this.myCampusMapView.mojo.centerUrlProvided('images/campus.png');
+    this.myMapView.mojo.centerUrlProvided('images/campus.png');
 }
 
 MapAssistant.prototype.orientationChanged = function(orientation) {
@@ -97,16 +97,16 @@ MapAssistant.prototype.handleCommand = function(event) {
 		switch( event.command )
 		{
 			case 'cmdCampusMap':
-			    this.myCampusMapView.mojo.centerUrlProvided('images/campus.png');
+			    this.myMapView.mojo.centerUrlProvided('images/campus.png');
 			    break;
 			case 'cmdNeighborhoodMap':
-				this.myCampusMapView.mojo.centerUrlProvided('images/neighborhood.png');
+				this.myMapView.mojo.centerUrlProvided('images/neighborhood.png');
 			    break;
 		    case 'cmdMetroMap':
-				this.myCampusMapView.mojo.centerUrlProvided('images/20100628-plan_245_4000.png');
+				this.myMapView.mojo.centerUrlProvided('images/20100628-plan_245_4000.png');
 			    break;
 			case 'cmdTramMap':
-				this.myCampusMapView.mojo.centerUrlProvided('images/brussels-trams.png');
+				this.myMapView.mojo.centerUrlProvided('images/brussels-trams.png');
 			    break;
 		}
 	}

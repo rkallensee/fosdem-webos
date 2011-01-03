@@ -18,20 +18,9 @@ StageAssistant.prototype.handleCommand = function(event) {
 			case 'cmdMap':
 				this.controller.pushScene("map");
 			    break;
-			    /*
-			case 'cmdNeighborhoodMap':
-				this.controller.pushScene("neighborhood");
-			    break;
-			case 'cmdMetroMap':
-				this.controller.pushScene("publictransport");
-			    break;
-			case 'cmdTramMap':
-				this.controller.pushScene("tram");
-			    break;
 			case 'cmdHelp':
 				this.controller.pushScene("help");
 			    break;
-			    */
 		}
 	}
 }

@@ -15,18 +15,6 @@
         "source": "app/assistants/map-assistant.js"
     },
     {
-        "scenes": "neighborhood",
-        "source": "app/assistants/neighborhood-assistant.js"
-    },
-    {
-        "scenes": "publictransport",
-        "source": "app/assistants/publictransport-assistant.js"
-    },
-    {
-        "scenes": "tram",
-        "source": "app/assistants/tram-assistant.js"
-    },
-    {
         "scenes": "feeds",
         "source": "app/assistants/feeds-assistant.js"
     },
