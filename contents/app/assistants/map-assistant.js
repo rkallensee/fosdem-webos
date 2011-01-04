@@ -37,7 +37,7 @@ MapAssistant.prototype.setup = function() {
 	        visible: true,
 	        items: [ 
 	            {
-	                label: $L('View menu'),
+	                label: $L('Main menu'),
 			        items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
 		        },
 		        

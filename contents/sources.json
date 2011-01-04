@@ -25,5 +25,9 @@
     {
         "scenes": "feeds",
         "source": "lib/jquery.timeago.js"
+    },
+    {
+        "scenes": "feeds",
+        "source": "lib/jquery.timeago.t9n.js"
     }
 ]

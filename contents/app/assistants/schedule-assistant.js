@@ -45,7 +45,7 @@ ScheduleAssistant.prototype.setup = function() {
 	        visible: true,
 	        items: [ 
 	            {
-	                label: $L('View menu'),
+	                label: $L('Main menu'),
 			        items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
 		        },
 	            
@@ -182,6 +182,8 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
     
     that.listModel.items = that.scheduleItemsShown;
     that.controller.modelChanged(that.listModel);
+    
+    that.controller.getSceneScroller().mojo.revealTop();
     
     that.refreshFavStars();
 
@@ -526,6 +528,8 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
     
     this.listModel.items = this.scheduleItemsShown;
     this.controller.modelChanged(this.listModel);
+    
+    this.controller.getSceneScroller().mojo.revealTop();
     
     // re-set star states
     this.refreshFavStars();

@@ -33,7 +33,7 @@ FeedsAssistant.prototype.setup = function() {
 	        visible: true,
 	        items: [ 
 	            {
-	                label: $L('View menu'),
+	                label: $L('Main menu'),
 			        items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
 		        },
 		        
@@ -199,6 +199,9 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
             time = Date.parseIso8601(jQuery(this).children('published').text());
             url = jQuery(this).children('link[type="text/html"][rel="alternate"]').attr('href');
         }
+        if( that.activeFeed == 'snAccount' ) {
+            author = jQuery(this).parent().children('author').children('name').text();
+        }
         
         time = jQuery.timeago(time);
         
@@ -220,7 +223,28 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
 
         //console.log("***** SETTING ITEMS: " + items.length);
         
+        if( that.activeFeed == 'webFeed' ) {
+            that.listModel.listTitle = $L('FOSDEM website');
+        }
+        if( that.activeFeed == 'snAccount' ) {
+            that.listModel.listTitle = $L('identi.ca account');
+        }
+        if( that.activeFeed == 'snGroup' ) {
+            that.listModel.listTitle = $L('identi.ca group');
+        }
+        if( that.activeFeed == 'snTag' ) {
+            that.listModel.listTitle = $L('identi.ca tag');
+        }
+        if( that.activeFeed == 'twAccount' ) {
+            that.listModel.listTitle = $L('twitter account');
+        }
+        if( that.activeFeed == 'twTag' ) {
+            that.listModel.listTitle = $L('twitter tag');
+        }
+        
         that.controller.modelChanged(that.listModel);
+        
+        that.controller.getSceneScroller().mojo.revealTop();
         
         that.spinnerModel.spinning = false;
         that.controller.modelChanged(that.spinnerModel);
