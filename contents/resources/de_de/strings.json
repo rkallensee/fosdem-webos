@@ -9,6 +9,7 @@
     "Schedule": "Programm",
     
     "Main menu": "Hauptmenü",
+    "Menu": "Menü",
     "View options": "Anzeigeoptionen",
     "Select feed": "Feed wählen",
     "Select map": "Karte wählen",
@@ -20,7 +21,7 @@
     "Help": "Hilfe",
     
     "FOSDEM website": "FOSDEM-Website",
-    "identi.ca account": identi.ca-Account",
+    "identi.ca account": "identi.ca-Account",
     "identi.ca group": "identi.ca-Gruppe",
     "identi.ca tag": "identi.ca-Tag",
     "twitter account": "Twitter-Account",
