@@ -72,7 +72,7 @@ Support Web: http://forge.webpresso.net/projects/fosdem-webos
 
 ===== EN: FOSDEM 2011 BETA =====
 
-Title: FOSDEM Schedule Beta
+Title: FOSDEM Schedule BETA
 Company name: webpresso.net
 Primary Category: Productivity & Utilities
 Secondary Tags: Lists
@@ -94,7 +94,7 @@ Support Web: http://forge.webpresso.net/projects/fosdem-webos
 
 ===== DE: FOSDEM 2011 BETA =====
 
-Title: FOSDEM Programm Beta
+Title: FOSDEM Programm BETA
 Company name: webpresso.net
 Primary Category: Produktivität
 Secondary Tags: Listen
