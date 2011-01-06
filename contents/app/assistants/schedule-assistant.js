@@ -91,11 +91,11 @@ ScheduleAssistant.prototype.setup = function() {
             itemTemplate: 'schedule/list/listitem', 
             listTemplate: 'schedule/list/listcontainer',
             dividerTemplate: 'schedule/list/divider',
-            emptyTemplate: 'schedule/list/empty', // when there are no results.
+            emptyTemplate: 'schedule/list/empty',
             dividerFunction: this.dividerFunc.bind(this),
             filterFunction: this.filterFunction.bind(this),
             onItemRendered: this.itemRenderedCallback.bind(this),
-            renderLimit: 25, // 200 for lazy one
+            renderLimit: 25,
             lookahead: 15,
             delay: 1000 // 1 second delay before filter string is used
         },
@@ -189,16 +189,11 @@ ScheduleAssistant.prototype.itemRenderedCallback = function(listWidget, itemMode
     }
 }
 
-ScheduleAssistant.prototype.dbError = function( transaction, result ) {
-	Mojo.Controller.errorDialog($L('A database error occured!'));
-	//console.log("***** DB ERROR:");
-}
-
 ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, offset, count) {
     
-    console.log("offset = " + offset);
-	console.log("count = " + count);
-	console.log("filter string = " + filterString);
+    //console.log("offset = " + offset);
+	//console.log("count = " + count);
+	//console.log("filter string = " + filterString);
     
     if( filterString != '' ) {
     
@@ -259,14 +254,12 @@ ScheduleAssistant.prototype.dividerFunc = function(itemModel) {
     var dateDetails = this.parseDate( itemModel.dtstart );
     var dateObj = new Date( 
         dateDetails.year,
-        dateDetails.month,
+        dateDetails.month - 1, // as index!
         dateDetails.day,
         dateDetails.hour,
         dateDetails.minute,
         00
     );
-    
-    console.log(dateObj.getMonth());
     
 	return Mojo.Format.formatDate( dateObj, {date: 'long'} );
 }
@@ -329,7 +322,7 @@ ScheduleAssistant.prototype.handleCommand = function(event) {
 	}
 }
 
-ScheduleAssistant.prototype.listTapped = function(event){
+ScheduleAssistant.prototype.listTapped = function(event) {
 	try {
 		var drawer = "eventDrawer-" + event.item.id;
 		this.controller.get(drawer).mojo.toggleState();
@@ -446,15 +439,15 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
         // re-load all items from bucket to get all models with their keys
         this.bucket.all( function(r) {
             that.setEventItems(r);
-            this.controller.instantiateChildWidgets($('schedule_list'));
+            that.controller.instantiateChildWidgets($('schedule_list'));
             
             Mojo.Controller.getAppController().showBanner(
                 $L("Refreshed schedule items."),
                 { source: 'notification' }
             );
             
-            this.viewFilterMenuModel.items[1].toggleCmd = 'cmdShowAll';
-            this.controller.modelChanged(that.viewFilterMenuModel);
+            that.viewFilterMenuModel.items[1].toggleCmd = 'cmdShowAll';
+            that.controller.modelChanged(that.viewFilterMenuModel);
             
             //console.log("***** SUCCESSFULLY SAVED.");
         });
