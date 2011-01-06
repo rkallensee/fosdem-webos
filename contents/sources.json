@@ -20,14 +20,14 @@
     },
     {
         "scenes": "feeds",
-        "source": "lib/DP_DateExtensions.js"
+        "source": "vendor/DP_DateExtensions.js"
     },
     {
         "scenes": "feeds",
-        "source": "lib/jquery.timeago.js"
+        "source": "vendor/jquery.timeago.js"
     },
     {
         "scenes": "feeds",
-        "source": "lib/jquery.timeago.t9n.js"
+        "source": "vendor/jquery.timeago.t9n.js"
     }
 ]

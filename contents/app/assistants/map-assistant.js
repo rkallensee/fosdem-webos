@@ -103,7 +103,7 @@ MapAssistant.prototype.handleCommand = function(event) {
 				this.myMapView.mojo.centerUrlProvided('images/neighborhood.png');
 			    break;
 		    case 'cmdMetroMap':
-				this.myMapView.mojo.centerUrlProvided('images/20100628-plan_245_4000.png');
+				this.myMapView.mojo.centerUrlProvided('images/20100628-plan_245_3000.png');
 			    break;
 			case 'cmdTramMap':
 				this.myMapView.mojo.centerUrlProvided('images/brussels-trams.png');
