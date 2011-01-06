@@ -38,8 +38,6 @@
     "Yes": "Ja",
     "No": "Nein",
 
-    "No events found. If you tried to refresh events, the request failed - please refresh again.": "Keine Events gefunden. Falls Sie das Programm aktualisiert haben, ist die Anfrage fehlgeschlagen - bitte versuchen Sie es erneut.",
-
     "A database error occured!": "Es trat ein Datenbankfehler auf.",
 
     "Can't connect to server. Please make sure your internet connection is available.": "Es kann keine Verbindung zum Server aufgebaut werden. Bitte stellen Sie sicher, dass eine Internet-Verbindung besteht.",
