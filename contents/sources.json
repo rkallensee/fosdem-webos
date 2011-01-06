@@ -7,6 +7,18 @@
         "source": "app/assistants/schedule-assistant.js"
     },
     {
+        "scenes": "schedule",
+        "source": "vendor/Lawnchair.js"
+    },
+    {
+        "scenes": "schedule",
+        "source": "vendor/adaptors/LawnchairAdaptorHelpers.js"
+    },
+    {
+        "scenes": "schedule",
+        "source": "vendor/adaptors/WebkitSQLiteAdaptor.js"
+    },
+    {
         "scenes": "help",
         "source": "app/assistants/help-assistant.js"
     },
