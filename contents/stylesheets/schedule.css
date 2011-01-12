@@ -31,7 +31,8 @@
 }
 
 #schedule_spinner,
-#feeds_spinner {
+#feeds_spinner,
+#maps_spinner {
     position: fixed;
     left: 100px;
     top: 100px;

@@ -26,7 +26,7 @@ MapAssistant.prototype.setup = function() {
 	    }
 	);
 
-	this.controller.setupWidget('mapView', {}, {});
+	this.controller.setupWidget('mapView', {extractfsParams:"1200:1200:3", noExtractFS: false}, {});
 	this.myMapView = $('mapView');
 	
 	// setup command menu
@@ -62,13 +62,23 @@ MapAssistant.prototype.setup = function() {
         undefined,
         MapViewSubmenuModel
     );
+    
+    this.spinnerModel = { spinning: true }
+    this.controller.setupWidget("maps_spinner", {spinnerSize: 'large'}, this.spinnerModel);
+
+    that = this; // this allows accessing the assistent object from other scopes. Ugly!
 	
 	/* add event handlers to listen to events from widgets */
+	
+	Mojo.Event.listen(this.controller.get("mapView"), Mojo.Event.imageViewChanged, this.imageLoaded.bindAsEventListener(this));
 }
 
 MapAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For
 	   example, key handlers that are observing the document */
+	   
+	// it seems like we have to re-set this variable after the scene was popped in again via back gesture
+	that = this; // this allows accessing the assistent object from other scopes. Ugly!
     
     var width  = window.innerWidth;
 	var height = window.innerHeight - parseInt(jQuery('#mapView').offset().top, 10);
@@ -85,6 +95,9 @@ MapAssistant.prototype.orientationChanged = function(orientation) {
 MapAssistant.prototype.deactivate = function(event) {
 	/* remove any event handlers you added in activate and do any other cleanup that should happen before
 	   this scene is popped or another scene is pushed on top */
+	
+	// since "that" is global, maybe it's better to cleanup after scene became inactive.
+    that = null;
 }
 
 MapAssistant.prototype.cleanup = function(event) {
@@ -97,17 +110,34 @@ MapAssistant.prototype.handleCommand = function(event) {
 		switch( event.command )
 		{
 			case 'cmdCampusMap':
+			    this.spinner('on');
 			    this.myMapView.mojo.centerUrlProvided('images/campus.png');
 			    break;
 			case 'cmdNeighborhoodMap':
+				this.spinner('on');
 				this.myMapView.mojo.centerUrlProvided('images/neighborhood.png');
 			    break;
 		    case 'cmdMetroMap':
+				this.spinner('on');
 				this.myMapView.mojo.centerUrlProvided('images/20100628-plan_245_3000.png');
 			    break;
 			case 'cmdTramMap':
+				this.spinner('on');
 				this.myMapView.mojo.centerUrlProvided('images/brussels-trams.png');
 			    break;
 		}
 	}
+}
+
+MapAssistant.prototype.imageLoaded = function() {
+    that.spinner('off');
+}
+
+MapAssistant.prototype.spinner = function(mode) {
+    if( mode == 'on' ) {
+        that.spinnerModel.spinning = true;
+    } else {
+        that.spinnerModel.spinning = false;
+    }
+    that.controller.modelChanged(that.spinnerModel);
 }
