@@ -1,4 +1,5 @@
 [
+    // {"source": "vendor/jquery.scrollTo-1.4.2.js"},
     {"source": "lib/submenu-model.js"},
     {"source": "lib/utils.js"},
     {"source": "app/assistants/stage-assistant.js"},

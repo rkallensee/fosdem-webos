@@ -250,12 +250,14 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
         
         that.controller.modelChanged(that.listModel);
         
-        that.controller.getSceneScroller().mojo.revealTop();
-        
         that.spinnerModel.spinning = false;
         that.controller.modelChanged(that.spinnerModel);
         
         that.controller.instantiateChildWidgets($('feed_list'));
+        
+        setTimeout(function() {
+            that.controller.getSceneScroller().mojo.scrollTo(0,0);
+        }, 500);
         
         //Mojo.Controller.getAppController().showBanner(
         //    $L("Refreshed feed items."),

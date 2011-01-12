@@ -186,9 +186,11 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
     that.scheduleItems = items;
     that.controller.modelChanged(that.listModel);
     
-    that.controller.getSceneScroller().mojo.revealTop();
-    
     that.refreshFavStars();
+    
+    setTimeout(function() {
+        that.controller.getSceneScroller().mojo.scrollTo(0,0);
+    }, 500);
 
     that.spinner('off');
 }
