@@ -101,17 +101,40 @@ ScheduleAssistant.prototype.setup = function() {
         },
         this.listModel
     );
-	
-	this.controller.listen('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
+    
+    // listener for list element tap
+    this.controller.listen('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
+    
+    // bind propertyChange event of list model to handler (used for favorites)
+    this.controller.listen('schedule_list', Mojo.Event.propertyChange, this.listPropertyChanged.bindAsEventListener(this));
 	
     this.spinnerModel = { spinning: false }
     this.controller.setupWidget("schedule_spinner", {spinnerSize: 'large'}, this.spinnerModel);
     
     // setup favorite checkbox widgets in item details drawer
     this.controller.setupWidget('listCheckBox', {property: 'favorite', modelProperty: 'favorite'});
-    
-    // bind propertyChange event of list model to handler (used for favorites)
-    this.controller.listen('schedule_list', Mojo.Event.propertyChange, this.listPropertyChanged.bindAsEventListener(this));
+}
+
+ScheduleAssistant.prototype.activate = function(event) {
+	/* put in event handlers here that should only be in effect when this scene is active. For
+	   example, key handlers that are observing the document */
+	
+	// it seems like we have to re-set this variable after the scene was popped in again via back gesture
+	that = this; // this allows accessing the assistant object from other scopes. Ugly!
+}
+
+
+ScheduleAssistant.prototype.deactivate = function(event) {
+	/* remove any event handlers you added in activate and do any other cleanup that should happen before
+	   this scene is popped or another scene is pushed on top */
+	   
+    // since "that" is global, maybe it's better to cleanup after scene became inactive.
+    that = null;
+}
+
+ScheduleAssistant.prototype.cleanup = function(event) {
+	/* this function should do any cleanup needed before the scene is destroyed as 
+	   a result of being popped off the scene stack */
 }
 
 ScheduleAssistant.prototype.showSchedule = function() {
@@ -293,22 +316,6 @@ ScheduleAssistant.prototype.orderSchedule = function( a, b ) {
     }
 }
 
-ScheduleAssistant.prototype.activate = function(event) {
-	/* put in event handlers here that should only be in effect when this scene is active. For
-	   example, key handlers that are observing the document */
-}
-
-
-ScheduleAssistant.prototype.deactivate = function(event) {
-	/* remove any event handlers you added in activate and do any other cleanup that should happen before
-	   this scene is popped or another scene is pushed on top */
-}
-
-ScheduleAssistant.prototype.cleanup = function(event) {
-	/* this function should do any cleanup needed before the scene is destroyed as 
-	   a result of being popped off the scene stack */
-}
-
 ScheduleAssistant.prototype.handleCommand = function(event) {
 	this.controller = Mojo.Controller.stageController.activeScene();
 	
@@ -468,7 +475,7 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
     
     //console.log("***** STARTING HIDING EXPIRED...");
 
-    that.spinner('on');
+    this.spinner('on');
 
     switch( type ) {
         

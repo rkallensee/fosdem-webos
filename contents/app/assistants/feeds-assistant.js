@@ -111,11 +111,17 @@ FeedsAssistant.prototype.setup = function() {
 FeedsAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For
 	   example, key handlers that are observing the document */
+	
+	// it seems like we have to re-set this variable after the scene was popped in again via back gesture
+	that = this; // this allows accessing the assistent object from other scopes. Ugly!
 };
 
 FeedsAssistant.prototype.deactivate = function(event) {
 	/* remove any event handlers you added in activate and do any other cleanup that should happen before
 	   this scene is popped or another scene is pushed on top */
+	   
+	// since "that" is global, maybe it's better to cleanup after scene became inactive.
+    that = null;
 };
 
 FeedsAssistant.prototype.cleanup = function(event) {
