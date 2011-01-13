@@ -26,7 +26,7 @@ MapAssistant.prototype.setup = function() {
 	    }
 	);
 
-	this.controller.setupWidget('mapView', {extractfsParams:"1200:1200:3", noExtractFS: false}, {});
+	this.controller.setupWidget('mapView', {}, {});
 	this.myMapView = $('mapView');
 	
 	// setup command menu
