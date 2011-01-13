@@ -65,6 +65,7 @@ MapAssistant.prototype.setup = function() {
     
     this.spinnerModel = { spinning: true }
     this.controller.setupWidget("maps_spinner", {spinnerSize: 'large'}, this.spinnerModel);
+    $('maps_scrim').show();
 
     that = this; // this allows accessing the assistent object from other scopes. Ugly!
 	
@@ -136,8 +137,10 @@ MapAssistant.prototype.imageLoaded = function() {
 
 MapAssistant.prototype.spinner = function(mode) {
     if( mode == 'on' ) {
+        $('maps_scrim').show();
         that.spinnerModel.spinning = true;
     } else {
+        $('maps_scrim').hide();
         that.spinnerModel.spinning = false;
     }
     that.controller.modelChanged(that.spinnerModel);

@@ -33,9 +33,11 @@
 #schedule_spinner,
 #feeds_spinner,
 #maps_spinner {
+    /* currently not needed because of scrim
     position: fixed;
     left: 100px;
     top: 100px;
+    */
 }
 
 .favbtn {

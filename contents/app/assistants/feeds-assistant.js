@@ -100,6 +100,7 @@ FeedsAssistant.prototype.setup = function() {
     // spinner
     this.spinnerModel = { spinning: true }
     this.controller.setupWidget("feeds_spinner", {spinnerSize: 'large'}, this.spinnerModel);
+    $('feeds_scrim').show();
     
     that = this; // this allows accessing the assistent object from other scopes. Ugly!
     
@@ -135,6 +136,7 @@ FeedsAssistant.prototype.showFeed = function( feedId ) {
 
     this.spinnerModel.spinning = true;
     this.controller.modelChanged(this.spinnerModel);
+    $('feeds_scrim').show();
     
     this.activeFeed = feedId;
     this.getFeedItems( this.feedSources[ feedId ] );
@@ -252,6 +254,7 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
         
         that.spinnerModel.spinning = false;
         that.controller.modelChanged(that.spinnerModel);
+        $('feeds_scrim').hide();
         
         that.controller.instantiateChildWidgets($('feed_list'));
         

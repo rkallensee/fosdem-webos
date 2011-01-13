@@ -110,6 +110,7 @@ ScheduleAssistant.prototype.setup = function() {
 	
     this.spinnerModel = { spinning: false }
     this.controller.setupWidget("schedule_spinner", {spinnerSize: 'large'}, this.spinnerModel);
+    $('schedule_scrim').hide();
     
     // setup favorite checkbox widgets in item details drawer
     this.controller.setupWidget('listCheckBox', {property: 'favorite', modelProperty: 'favorite'});
@@ -200,8 +201,10 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
 
 ScheduleAssistant.prototype.spinner = function(mode) {
     if( mode == 'on' ) {
+        $('schedule_scrim').show();
         that.spinnerModel.spinning = true;
     } else {
+        $('schedule_scrim').hide();
         that.spinnerModel.spinning = false;
     }
     that.controller.modelChanged(that.spinnerModel);
