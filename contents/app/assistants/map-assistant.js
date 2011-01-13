@@ -104,6 +104,9 @@ MapAssistant.prototype.deactivate = function(event) {
 MapAssistant.prototype.cleanup = function(event) {
 	/* this function should do any cleanup needed before the scene is destroyed as 
 	   a result of being popped off the scene stack */
+	   
+	// since "that" is global, maybe it's better to cleanup after scene became inactive.
+    that = null;
 }
 
 MapAssistant.prototype.handleCommand = function(event) {

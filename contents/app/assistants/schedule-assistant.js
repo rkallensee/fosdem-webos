@@ -136,6 +136,9 @@ ScheduleAssistant.prototype.deactivate = function(event) {
 ScheduleAssistant.prototype.cleanup = function(event) {
 	/* this function should do any cleanup needed before the scene is destroyed as 
 	   a result of being popped off the scene stack */
+	   
+	// since "that" is global, maybe it's better to cleanup after scene became inactive.
+    that = null;
 }
 
 ScheduleAssistant.prototype.showSchedule = function() {
@@ -542,9 +545,11 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
 
 // only "favorite" list property changes. this is handled here.
 ScheduleAssistant.prototype.listPropertyChanged = function(event) {
-    //console.log(event.model.key);
+    //console.log(event.model.key); console.log(event.value);
     for( var i=0; i<this.scheduleItems.length; i++ ) {
-        if( event.model.eventid == this.scheduleItems[i].eventid ) {
+    
+        // if model found and key is not undefined (prevent inserting a new item)
+        if( event.model.eventid == this.scheduleItems[i].eventid && event.model.key != undefined ) {
             
             if( event.value == true ) {
                 jQuery('#star-'+event.model.id).addClass('starActive');
