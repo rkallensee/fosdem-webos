@@ -64,7 +64,7 @@ MapAssistant.prototype.setup = function() {
     );
     
     this.spinnerModel = { spinning: true }
-    this.controller.setupWidget("maps_spinner", {spinnerSize: 'large'}, this.spinnerModel);
+    this.controller.setupWidget("schedule_spinner", {spinnerSize: 'large'}, this.spinnerModel);
 
     that = this; // this allows accessing the assistent object from other scopes. Ugly!
 	
