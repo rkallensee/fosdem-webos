@@ -545,7 +545,6 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
 
 // only "favorite" list property changes. this is handled here.
 ScheduleAssistant.prototype.listPropertyChanged = function(event) {
-    //console.log(event.model.key); console.log(event.value);
     for( var i=0; i<this.scheduleItems.length; i++ ) {
     
         // if model found and key is not undefined (prevent inserting a new item)
@@ -567,8 +566,7 @@ ScheduleAssistant.prototype.listPropertyChanged = function(event) {
             this.bucket.save( this.scheduleItems[i] );
         }
     }
-    
-    //console.log(event.property+"#"+event.value+"##"+event.model.eventid+"###"+event.model.pbfeventid);
+    //console.log(event.property+"#"+event.value+"##"+event.model.key+"##"+event.model.favorite+"###"+event.model.pbfeventid);
 }
 
 ScheduleAssistant.prototype.parseDate = function(xCalDate){
