@@ -95,7 +95,7 @@ ScheduleAssistant.prototype.setup = function() {
             dividerFunction: this.dividerFunc.bind(this),
             filterFunction: this.filterFunction.bind(this),
             onItemRendered: this.itemRenderedCallback.bind(this),
-            renderLimit: 25,
+            renderLimit: 20,
             lookahead: 15,
             delay: 1000 // 1 second delay before filter string is used
         },
@@ -188,6 +188,9 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
     
     that.refreshFavStars();
     
+    // close filterfield if open
+    that.controller.get('schedule_list').mojo.close();
+    
     setTimeout(function() {
         that.controller.getSceneScroller().mojo.scrollTo(0,0);
     }, 500);
@@ -259,10 +262,10 @@ ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, 
 	    this.refreshFavStars();
 	
 	    //set the list's lenght & count if we're not repeating the same filter string from an earlier pass
-	    if( this.filter !== filterString ) {
+	    //if( this.filter !== filterString ) {
 		    listWidget.mojo.setLength( totalSubsetSize );
 		    listWidget.mojo.setCount( totalSubsetSize );
-	    }
+	    //}
 	    
 	    this.filter = filterString;
 	    

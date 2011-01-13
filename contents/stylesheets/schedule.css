@@ -56,4 +56,29 @@
 	padding-bottom: 10px;
 }
 
+/* fade top/bottom */
 
+.fade-top-with-arrow {
+	position: fixed; 
+	top: 0; 
+	z-index: 100000;
+	height: 54px; 
+	width: 100%;
+	background: url(../images/fade-top-with-arrow.png) top center repeat-x;
+	-webkit-palm-mouse-target: ignore;
+}
+
+.fade-bottom-arrow-with-buttons {
+	position: fixed; 
+	bottom: 45px;
+	z-index: 100000;
+	height: 54px; 
+	width: 100%;
+	background: url(../images/fade-arrow-down.png) center bottom no-repeat;
+	-webkit-palm-mouse-target: ignore;
+}
+
+/* header icon */
+.palm-page-header-wrapper > .scheduleapp-header-icon {
+    background: url(../images/mini-icon.png) center no-repeat;
+}
