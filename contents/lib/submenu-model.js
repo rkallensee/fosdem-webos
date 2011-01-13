@@ -25,7 +25,7 @@ var MapViewSubmenuModel = {
     items: [
         {label: $L('Campus map'), command: 'cmdCampusMap', shortcut: 'm'},
         {label: $L('Neighborhood map'), command: 'cmdNeighborhoodMap', shortcut: 'n'},
-        {label: $L('Public transport map'), command: 'cmdMetroMap', shortcut: 'p'},
+        {label: $L('STIB-MIVB (web)'), command: 'cmdMetroMap', shortcut: 'p'},
         {label: $L('Tram map'), command: 'cmdTramMap', shortcut: 't'},
 	]
 };

@@ -118,8 +118,9 @@ MapAssistant.prototype.handleCommand = function(event) {
 				this.myMapView.mojo.centerUrlProvided('images/neighborhood.png');
 			    break;
 		    case 'cmdMetroMap':
-				this.spinner('on');
-				this.myMapView.mojo.centerUrlProvided('images/20100628-plan_245_3000.png');
+				try {
+		            window.location = 'http://m.stib.be/index.php?lang=en';
+	            } catch (e) {}
 			    break;
 			case 'cmdTramMap':
 				this.spinner('on');
