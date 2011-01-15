@@ -40,12 +40,16 @@
     */
 }
 
+.allbtn {
+	background: url(../images/show-all-btn.png) center no-repeat;
+}
+
 .favbtn {
 	background: url(../images/emblem-favorite-btn.png) center no-repeat;
 }
 
-.favallbtn {
-	background: url(../images/emblem-favorite-all-btn.png) center no-repeat;
+.upcomingbtn {
+	background: url(../images/show-upcoming-btn.png) center no-repeat;
 }
 
 #FeedListContainer .palm-row-wrapper .title {

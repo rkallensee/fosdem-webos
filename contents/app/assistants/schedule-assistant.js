@@ -54,8 +54,9 @@ ScheduleAssistant.prototype.setup = function() {
 	            //{ label: $L('Hide expired events'), command:'cmdShowUpcoming' } // HIDE EXPIRED CURRENTLY DISABLED
 
 	            {label: $L('View options'), toggleCmd: 'cmdShowAll', items: [
-	                { label: $L('Show all'), icon: 'favallbtn', command: 'cmdShowAll' },
-					{ label: $L('Show only favorites'), icon: 'favbtn', command: 'cmdShowFavs' }
+	                { label: $L('Show all'), icon: 'allbtn', command: 'cmdShowAll' },
+					{ label: $L('Show only favorites'), icon: 'favbtn', command: 'cmdShowFavs' },
+					{ label: $L('Show only upcoming'), icon: 'upcomingbtn', command: 'cmdShowUpcoming' }
 				]}
 	        ] 
         }
@@ -506,17 +507,19 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
             this.bucket.all( function(r) {
                 r = r.filter( function( element, index, array ) {
                     var date = new Date();
-                    //var date = new Date(2010, 02, 06, 15, 30, 00);
+                    var date = new Date(2010, 1, 6, 15, 30, 00); // month as index!
                         
                     var xcaldate = that.parseDate( element.dtstart );
                     var dtstart = new Date( 
                         xcaldate.year,
-                        xcaldate.month,
+                        xcaldate.month - 1, // as index!
                         xcaldate.day,
                         xcaldate.hour,
                         xcaldate.minute,
                         00
                     );
+                    
+                    console.log(date);
                     
                     var diffHours = Math.round( (date-dtstart) / (1000*60*60 ) );
                     
