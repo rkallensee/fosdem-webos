@@ -519,8 +519,6 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
                         00
                     );
                     
-                    console.log(date);
-                    
                     var diffHours = Math.round( (date-dtstart) / (1000*60*60 ) );
                     
                     if( diffHours < 1 ) { // use a tolerance of one hour

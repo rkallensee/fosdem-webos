@@ -10,17 +10,35 @@ StageAssistant.prototype.handleCommand = function(event) {
 		switch( event.command )
 		{
 			case 'cmdSchedule':
-				this.controller.pushScene("schedule");
+				this.pushMyScene("schedule");
 			    break;
 		    case 'cmdFeeds':
-				this.controller.pushScene("feeds");
+				this.pushMyScene("feeds");
 			    break;
 			case 'cmdMap':
-				this.controller.pushScene("map");
+				this.pushMyScene("map");
 			    break;
 			case 'cmdHelp':
-				this.controller.pushScene("help");
+				this.pushMyScene("help");
 			    break;
 		}
 	}
+}
+
+StageAssistant.prototype.pushMyScene = function(sceneId) {
+    
+    var allScenes = this.controller.getScenes();
+    
+    // this checks if scene already exists in scene stack.
+    // if yes, pop all scenes on top.
+    
+    for( var i=0; i<allScenes.length; i++ ) {
+        if( allScenes[i].sceneName == sceneId ) {
+            this.controller.popScenesTo(sceneId);
+            return;
+        }
+    }
+    
+    // if scene is not in stack, push it.
+    this.controller.pushScene(sceneId);
 }
