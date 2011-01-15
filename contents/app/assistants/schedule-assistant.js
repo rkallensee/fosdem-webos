@@ -549,7 +549,7 @@ ScheduleAssistant.prototype.listPropertyChanged = function(event) {
     for( var i=0; i<this.scheduleItems.length; i++ ) {
     
         // if model found and key is not undefined (prevent inserting a new item)
-        if( event.model.eventid == this.scheduleItems[i].eventid && event.model.key != undefined ) {
+        if( event.model.eventid == this.scheduleItems[i].eventid ) { //&& event.model.key != undefined ) {
             
             if( event.value == true ) {
                 jQuery('#star-'+event.model.id).addClass('starActive');
@@ -564,7 +564,11 @@ ScheduleAssistant.prototype.listPropertyChanged = function(event) {
             this.scheduleItems[i].open = false;
             
             // save the item
-            this.bucket.save( this.scheduleItems[i] );
+            //this.bucket.save( this.scheduleItems[i] );
+            //console.log(this.scheduleItems[i].key);
+            this.bucket.save( this.scheduleItems[i], function(r) {
+                console.log( 'Updated item ' + r.key );
+            });
         }
     }
     //console.log(event.property+"#"+event.value+"##"+event.model.key+"##"+event.model.favorite+"###"+event.model.pbfeventid);
