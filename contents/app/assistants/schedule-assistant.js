@@ -507,7 +507,7 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
             this.bucket.all( function(r) {
                 r = r.filter( function( element, index, array ) {
                     var date = new Date();
-                    var date = new Date(2010, 1, 6, 15, 30, 00); // month as index!
+                    //var date = new Date(2010, 1, 6, 15, 30, 00); // month as index!
                         
                     var xcaldate = that.parseDate( element.dtstart );
                     var dtstart = new Date( 

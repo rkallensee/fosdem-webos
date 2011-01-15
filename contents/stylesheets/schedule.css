@@ -30,6 +30,12 @@
 	margin-bottom: 10px;
 }
 
+#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav .title {
+	text-align: left !important;
+	font-size: 0.8em;
+	padding-top: 15px;
+}
+
 #schedule_spinner,
 #feeds_spinner,
 #maps_spinner {
@@ -76,7 +82,7 @@
 
 .fade-bottom-arrow-with-buttons {
 	position: fixed; 
-	bottom: 45px;
+	bottom: 40px;
 	z-index: 100000;
 	height: 54px; 
 	width: 100%;
