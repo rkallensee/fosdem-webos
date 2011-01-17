@@ -70,7 +70,7 @@ ScheduleAssistant.prototype.setup = function() {
     );
     
     // Lawnchair bucket
-    this.bucket = new Lawnchair({table:'schedule', adaptor:'webkit'});
+    this.bucket = new Lawnchair({table: 'schedule', adaptor: 'webkit', onError: this.handleDbError.bind(this)});
     
     // subset of currently displayed items
     this.scheduleItems = [];
@@ -151,34 +151,41 @@ ScheduleAssistant.prototype.showSchedule = function() {
     });
 }
 
+ScheduleAssistant.prototype.handleDbError = function(transaction, error) {
+	// console.log(error.message); console.log(error.code);
+	
+	if( error.code == 1 && error.message.indexOf('no such table') > -1 ) {
+	    // This means the database table is unavailable. The only reason could be
+	    // that there never was a schedule - so it's the first application start.
+	    
+        //Mojo.Controller.errorDialog($L("There are no schedule events to show."));
+        //that.spinner('off');
+        
+        that.controller.showAlertDialog({
+            onChoose: function(value) {
+                if( value == 'refresh' ) {
+                    that.refreshSchedule();
+                } else {
+                    that.spinner('off');
+                }
+            },
+            title: $L("Welcome to the FOSDEM app!"),
+            message: $L("There is currently no schedule stored on your phone - do you want to download it now from FOSDEM server? Please remember to refresh it periodically."),
+            choices:[
+                 {label:$L('Yes'), value:"refresh", type:'affirmative'},  
+                 {label:$L("No"), value:"well", type:'negative'}
+            ]
+        });
+        return;
+	}
+}
+
 ScheduleAssistant.prototype.setEventItems = function( items ) {
 	//console.log("***** START SETTING ITEMS... ");
 
     if( items == null || items.length == 0 ) {
-        // earlier, this meant that there's no schedule on the phone.
-        // in the meanwhile, this method doesn't get called when there's 
-        // no schedule - but only when there are no results, e.g. no favorites.
-        //Mojo.Controller.errorDialog($L("There are no schedule events to show."));
-        //that.spinner('off');
-        
-        //that.controller.showAlertDialog({
-        //    onChoose: function(value) {
-        //        if( value == 'refresh' ) {
-        //            that.refreshSchedule();
-        //        } else {
-        //            that.spinner('off');
-        //        }
-        //    },
-        //    title: $L("Welcome!"),
-        //    message: $L("There is currently no schedule stored on your phone. Do you want to download it now? Please use the help function in application menu for more information."),
-        //    choices:[
-        //         {label:$L('Yes'), value:"refresh", type:'affirmative'},  
-        //         {label:$L("No"), value:"well", type:'negative'}
-        //    ]
-        //});
-        //return;
-        
-        // use empty array. an error message is shown via the lists' empty.html view.
+        // use empty array. an error message is shown in handleDbError() when there
+        // was an error.
         items = [];
     }
     

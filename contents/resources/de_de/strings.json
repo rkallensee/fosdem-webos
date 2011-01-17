@@ -33,8 +33,8 @@
     "STIB-MIVB (web)": "STIB-MIVB (web)",
     "Tram map": "Straßenbahnkarte",
 
-    "Welcome!": "Willkommen!",
-    "There is currently no schedule stored on your phone. Do you want to download it now? Please use the help function in application menu for more information.": "Momentan ist kein Programmplan auf Ihrem Gerät gespeichert. Wollen Sie diesen jetzt herunterladen? Für weitere Informationen benutzen Sie die Hilfe im Anwendungsmenü.",
+    "Welcome to the FOSDEM app!": "Willkommen in der FOSDEM-App!",
+    "There is currently no schedule stored on your phone - do you want to download it now from FOSDEM server? Please remember to refresh it periodically.": "Momentan ist kein Programm auf Ihrem Gerät gespeichert - wollen Sie es jetzt vom FOSDEM-Server laden? Bitte denken Sie daran, das Programm regelmäßig zu aktualisieren.",
 
     "Yes": "Ja",
     "No": "Nein",
