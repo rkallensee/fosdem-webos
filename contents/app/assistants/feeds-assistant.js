@@ -137,9 +137,7 @@ FeedsAssistant.prototype.cleanup = function(event) {
 FeedsAssistant.prototype.showFeed = function( feedId ) {
 	//console.log("***** START SETTING ITEMS... ");
 
-    this.spinnerModel.spinning = true;
-    this.controller.modelChanged(this.spinnerModel);
-    $('feeds_scrim').show();
+    this.spinner('on');
     
     this.activeFeed = feedId;
     this.getFeedItems( this.feedSources[ feedId ] );
@@ -154,27 +152,32 @@ FeedsAssistant.prototype.getFeedItems = function( uri ) {
 	    onSuccess: function(response) {
 	        if( response.isInternetConnectionAvailable !== true ) {
 	            Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
+	            that.spinner('off');
+	        } else {
+	        
+	            //console.log("***** STARTING AJAX REQUEST...");
+    
+                var request = new Ajax.Request(uri, {
+
+                    method: 'get',
+                    evalJSON: 'false',
+                    onSuccess: function(transport) {
+                        that.processIncomingFeedItems( transport );
+                    },
+                    onFailure: function(){  
+                        Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
+                        that.spinner('off');
+                    }
+
+                });
+	        
 	        }
 	    },
 	    onFailure: function(response) {
 	        Mojo.Controller.errorDialog($L('Failed to get connection status. Please try again.'));
+	        that.spinner('off');
 	    }
 	});
-	
-    //console.log("***** STARTING AJAX REQUEST...");
-    
-    var request = new Ajax.Request(uri, {
-
-        method: 'get',
-        evalJSON: 'false',
-        onSuccess: function(transport) {
-            that.processIncomingFeedItems( transport );
-        },
-        onFailure: function(){  
-            Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
-        }
-
-    });
 }
 
 FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
@@ -255,9 +258,7 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
         
         that.controller.modelChanged(that.listModel);
         
-        that.spinnerModel.spinning = false;
-        that.controller.modelChanged(that.spinnerModel);
-        $('feeds_scrim').hide();
+        this.spinner('off');
         
         that.controller.instantiateChildWidgets($('feed_list'));
         
@@ -306,4 +307,15 @@ FeedsAssistant.prototype.handleCommand = function(event) {
 			    break;
 		}
 	}
+}
+
+FeedsAssistant.prototype.spinner = function(mode) {
+    if( mode == 'on' ) {
+        $('feeds_scrim').show();
+        that.spinnerModel.spinning = true;
+    } else {
+        $('feeds_scrim').hide();
+        that.spinnerModel.spinning = false;
+    }
+    that.controller.modelChanged(that.spinnerModel);
 }

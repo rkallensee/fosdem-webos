@@ -364,35 +364,37 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
 	
     this.controller.serviceRequest('palm://com.palm.connectionmanager', {
 	    method: 'getstatus',
-	    parameters: {subscribe:false},
+	    parameters: {subscribe: false},
 	    onSuccess: function(response) {
 	        if( response.isInternetConnectionAvailable !== true ) {
 	            Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
+	            that.spinner('off');
+	        } else {
+	            //console.log("***** STARTING AJAX REQUEST...");
+    
+                var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
+                //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
+                //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
+
+                var request = new Ajax.Request(xcalURL, {
+
+                    method: 'get',
+                    evalJSON: 'false',
+                    onSuccess: function(transport){
+                        that.incubateSetAndSaveResponse( transport );
+                    },
+                    onFailure: function(){  
+                        Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
+                        that.spinner('off');
+                    }
+
+                });
 	        }
 	    },
 	    onFailure: function(response) {
 	        Mojo.Controller.errorDialog($L('Failed to get connection status. Please try again.'));
 	    }
 	});
-	
-    //console.log("***** STARTING AJAX REQUEST...");
-    
-    var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
-    //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
-    //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
-
-    var request = new Ajax.Request(xcalURL, {
-
-        method: 'get',
-        evalJSON: 'false',
-        onSuccess: function(transport){
-            that.incubateSetAndSaveResponse( transport );
-        },
-        onFailure: function(){  
-            Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
-        }
-
-    });
 }
 
 ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
