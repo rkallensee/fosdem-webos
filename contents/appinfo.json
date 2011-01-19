@@ -1,9 +1,9 @@
 {
-	"id": "net.webpresso.fosdem",
-	"version": "0.2.2",
-	"vendor": "webpresso.net",
-	"type": "web",
-	"main": "index.html",
-	"title": "FOSDEM Schedule",
-	"icon": "icon.png"
+    "id": "net.webpresso.fosdem-beta",
+    "version": "0.2.2",
+    "vendor": "webpresso.net",
+    "type": "web",
+    "main": "index.html",
+    "title": "FOSDEM Schedule Beta",
+    "icon": "icon.png"
 }
