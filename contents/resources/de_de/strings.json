@@ -8,33 +8,35 @@
     "Show only favorites": "Nur Favoriten anzeigen",
     "Show only upcoming": "Keine vergangenen anzeigen",
     "Schedule": "Programm",
-    
+
     "Main menu": "Hauptmenü",
     "Menu": "Menü",
     "View options": "Anzeigeoptionen",
     "Select feed": "Feed wählen",
     "Select map": "Karte wählen",
-    
+
     "Show": "Anzeigen",
     "Schedule": "Programm",
     "Feeds (online)": "Feeds (online)",
     "Maps": "Karten",
     "Help": "Hilfe",
-    
+
     "FOSDEM website": "FOSDEM-Website",
     "identi.ca account": "identi.ca-Account",
     "identi.ca group": "identi.ca-Gruppe",
     "identi.ca tag": "identi.ca-Tag",
     "twitter account": "Twitter-Account",
     "twitter tag": "Twitter-Tag",
-    
+
     "Campus map": "Campus-Karte",
     "Neighborhood map": "Umgebungskarte",
     "STIB-MIVB (web)": "STIB-MIVB (web)",
     "Tram map": "Straßenbahnkarte",
 
     "Welcome to the FOSDEM app!": "Willkommen in der FOSDEM-App!",
-    "There is currently no schedule stored on your phone - do you want to download it now from FOSDEM server? Please remember to refresh it periodically.": "Momentan ist kein Programm auf Ihrem Gerät gespeichert - wollen Sie es jetzt vom FOSDEM-Server laden? Bitte denken Sie daran, das Programm regelmäßig zu aktualisieren.",
+    "There is currently no schedule stored on your phone - do you want to download it now from FOSDEM server? This may take a while. Please remember to refresh it periodically.": "Momentan ist kein Programm auf Ihrem Gerät gespeichert - wollen Sie es jetzt vom FOSDEM-Server laden? Dies benötigt etwas Zeit. Bitte denken Sie daran, das Programm regelmäßig zu aktualisieren.",
+    "Refresh schedule": "Programm aktualisieren",
+    "Do you really want to refresh the schedule stored on your device? An internet connection is required. The refresh may take a while. Favorites are preserved.": "Wollen Sie wirklich das auf Ihrem Gerät gespeicherte Programm aktualisieren? Eine Internet-Verbindung ist erforderlich. Das Aktualisieren benötigt etwas Zeit. Favoriten bleiben erhalten.",
 
     "Yes": "Ja",
     "No": "Nein",
@@ -60,7 +62,7 @@
     "October": "Oktober",
     "November": "November",
     "December": "Dezember",
-    
+
     "_prefix_ago": "vor",
     "_prefix_from_now": "in",
     "_suffix_ago": " ",
