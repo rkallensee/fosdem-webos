@@ -37,10 +37,7 @@ ScheduleAssistant.prototype.setup = function() {
     // setup command menu
     this.controller.setupWidget(
         Mojo.Menu.commandMenu,
-        {
-            //spacerHeight: 0,
-            //menuClass: 'no-fade'
-        },
+        {},
         this.viewFilterMenuModel = {
             visible: true,
             items: [
@@ -49,9 +46,7 @@ ScheduleAssistant.prototype.setup = function() {
                     items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
                 },
 
-                { label: $L('Refresh'), icon: 'refresh', command: 'cmdRefresh' },
-
-                //{ label: $L('Hide expired events'), command:'cmdShowUpcoming' } // HIDE EXPIRED CURRENTLY DISABLED
+                {label: $L('Refresh'), icon: 'refresh', command: 'cmdRefresh'},
 
                 {label: $L('View options'), toggleCmd: 'cmdShowAll', items: [
                     { label: $L('Show all'), icon: 'allbtn', command: 'cmdShowAll' },
@@ -611,4 +606,3 @@ ScheduleAssistant.prototype.parseDate = function(xCalDate){
         'minute'    : xCalDate.substr(11,2)
     }
 }
-
