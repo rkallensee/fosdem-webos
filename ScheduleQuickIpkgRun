@@ -6,5 +6,5 @@ palm-install -r net.webpresso.fosdem
 
 # package, install and run FOSDEM app on palm emulator
 palm-package contents
-palm-install net.webpresso.fosdem_0.2.2_all.ipk
+palm-install net.webpresso.fosdem_0.2.3_all.ipk
 palm-launch net.webpresso.fosdem
