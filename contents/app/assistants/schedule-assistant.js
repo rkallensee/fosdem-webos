@@ -253,6 +253,7 @@ ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, 
             if( this.scheduleItems[i].time.toLowerCase().include(filterString.toLowerCase())
              || this.scheduleItems[i].location.toLowerCase().include(filterString.toLowerCase())
              || this.scheduleItems[i].title.toLowerCase().include(filterString.toLowerCase())
+             || this.scheduleItems[i].description.toLowerCase().include(filterString.toLowerCase())
              || this.scheduleItems[i].attendee.toLowerCase().include(filterString.toLowerCase())
             ) {
                 if( subset.length < count && totalSubsetSize >= offset) {
