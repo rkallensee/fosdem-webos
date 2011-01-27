@@ -57,6 +57,12 @@ ScheduleAssistant.prototype.setup = function() {
         }
     );
 
+    // initialize the view filter state
+    this.activeViewFilter = 'all';
+
+    // initialize search filter
+    this.filter = '';
+
     // setup view submenu, items come from lib/submenu-model.js
     this.controller.setupWidget(
         'view-submenu',
@@ -278,6 +284,14 @@ ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, 
         //}
 
         this.filter = filterString;
+
+    } else if( filterString == '' && this.filter != '' ) {
+
+        // search was cleared, so re-initialize the list!
+        listWidget.mojo.setLength( this.scheduleItems.length );
+        listWidget.mojo.setCount( this.scheduleItems.length );
+        this.controller.modelChanged(this.listModel);
+        this.showFiltered( this.activeViewFilter );
 
     } else {
         //if( that.listModel.items.length > 0 ) {
@@ -506,6 +520,8 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
 
     this.spinner('on');
 
+    this.filter = '';
+
     switch( type ) {
 
         case 'favs':
@@ -518,6 +534,7 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
                 } );
                 that.setEventItems(r);
             } );
+            this.activeViewFilter = 'favs';
             break;
 
         case 'upcoming':
@@ -546,6 +563,7 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
                 } );
                 that.setEventItems(r);
             } );
+            this.activeViewFilter = 'upcoming';
             break;
 
         case 'all':
@@ -556,6 +574,7 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
             this.bucket.all( function(r){
                 that.setEventItems(r);
             });
+            this.activeViewFilter = 'all';
             break;
 
     }
