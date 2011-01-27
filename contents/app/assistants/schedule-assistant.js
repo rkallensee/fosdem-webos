@@ -408,7 +408,7 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
                 Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
                 that.spinner('off');
             } else {
-                //console.log("***** STARTING AJAX REQUEST...");
+                console.log("***** STARTING AJAX REQUEST...");
 
                 var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
                 //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
@@ -417,7 +417,8 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
                 var request = new Ajax.Request(xcalURL, {
 
                     method: 'get',
-                    evalJSON: 'false',
+                    evalJSON: false,
+                    evalJS: false,
                     onSuccess: function(transport){
                         that.incubateSetAndSaveResponse( transport );
                     },
@@ -436,9 +437,10 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
 }
 
 ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
-    //console.log("***** STARTING INCUBATING...");
+    console.log("***** STARTING INCUBATING...");
 
     if( transport.responseXML === null && transport.responseText !== null ) {
+        console.log("***** STARTING TO PARSE FROM STRING...");
         transport.responseXML = new DOMParser().parseFromString(transport.responseText, 'text/xml');
     }
 
@@ -452,49 +454,69 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
         }
     }
 
-    if( jQuery(transport.responseXML.documentElement).find('vevent').size() > 0 ) {
+    var vevents = jQuery(transport.responseXML.documentElement).find('vevent');
+
+    if( vevents.size() > 0 ) {
         this.scheduleItems = [];
     }
 
-    // Find each 'vevent' node
-    jQuery(transport.responseXML.documentElement).find('vevent').each(function() {
-        // Parse the text string into an object using the above function
-        var dateObj = that.parseDate(jQuery(this).children('dtstart').text());
+    console.log("***** STARTING TO PARSE...");
 
-        var url = jQuery(this).children('url').text();
+    // CALL A RECURSIVE FUNCTION TO AVOID THE 10sec SCRIPT KILLER
+    // after the recursion is finished, the function calls
+    // saveScheduleItems() to save all processed items.
+    this.processItem(0, vevents);
+}
 
-        if( url.indexOf( "/2010/schedule//2010/schedule/" ) != -1 ) {
-            // fixing defect urls from xcal
-            url = url.replace( "/2010/schedule/", "" );
-        }
-        if( url.indexOf( "/2011/schedule//2011/schedule/" ) != -1 ) {
-            // fixing defect urls from xcal
-            url = url.replace( "/2011/schedule/", "" );
-        }
+ScheduleAssistant.prototype.processItem = function(i, results) {
 
-        var isFavorite = jQuery.inArray(
-            jQuery(this).children('uid').text(),
-            that.tempFavorites
-        ) >= 0; // returns -1 if not found, otherwise the index
+    var item = jQuery(results).get(i);
 
-        that.scheduleItems.push({
-            id: eventCounter,
-            date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year),
-            dtstart: $L(jQuery(this).children('dtstart').text()),
-            time: $L(dateObj.hour + ':' + dateObj.minute),
-            location: $L(jQuery(this).children('location').text()),
-            locationImg: jQuery(this).children('location').text().toLowerCase().split('.').join(''),
-            title: $L(jQuery(this).children('summary').text()),
-            description: $L(jQuery(this).children('description').text()),
-            attendee: $L(jQuery(this).children('attendee').text()),
-            url: url,
-            eventid: jQuery(this).children('uid').text(),
-            pbfeventid: jQuery(this).children("[nodeName=pentabarf:event-id]").text(),
-            favorite: isFavorite
-        });
+    var dateObj = that.parseDate(jQuery(item).children('dtstart').text());
 
-        eventCounter++;
+    var url = jQuery(item).children('url').text();
+
+    if( url.indexOf( "/2010/schedule//2010/schedule/" ) != -1 ) {
+        // fixing defect urls from xcal
+        url = url.replace( "/2010/schedule/", "" );
+    }
+    if( url.indexOf( "/2011/schedule//2011/schedule/" ) != -1 ) {
+        // fixing defect urls from xcal
+        url = url.replace( "/2011/schedule/", "" );
+    }
+
+    var isFavorite = jQuery.inArray(
+        jQuery(item).children('uid').text(),
+        that.tempFavorites
+    ) >= 0; // returns -1 if not found, otherwise the index
+
+    this.scheduleItems.push({
+        id: i,
+        date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year),
+        dtstart: $L(jQuery(item).children('dtstart').text()),
+        time: $L(dateObj.hour + ':' + dateObj.minute),
+        location: $L(jQuery(item).children('location').text()),
+        locationImg: jQuery(item).children('location').text().toLowerCase().split('.').join(''),
+        title: $L(jQuery(item).children('summary').text()),
+        description: $L(jQuery(item).children('description').text()),
+        attendee: $L(jQuery(item).children('attendee').text()),
+        url: url,
+        eventid: jQuery(item).children('uid').text(),
+        pbfeventid: jQuery(item).children("[nodeName=pentabarf:event-id]").text(),
+        favorite: isFavorite
     });
+
+    if( i >= jQuery(results).size()-1 ) {
+        this.saveScheduleItems();
+    } else {
+        if( i < jQuery(results).size() ) {
+            this.processItem.bind(this).defer(i+1, results)
+        }
+    }
+}
+
+ScheduleAssistant.prototype.saveScheduleItems = function() {
+    console.log("***** PARSED, NOW STARTING TO SAVE...");
 
     if( this.scheduleItems.length > 0 ) {
         // nuke all documents
@@ -518,7 +540,7 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
             that.viewFilterMenuModel.items[1].toggleCmd = 'cmdShowAll';
             that.controller.modelChanged(that.viewFilterMenuModel);
 
-            //console.log("***** SUCCESSFULLY SAVED.");
+            console.log("***** SUCCESSFULLY SAVED.");
         });
     }
 }
