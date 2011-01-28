@@ -295,22 +295,23 @@ ScheduleAssistant.prototype.filterFunction = function(filterString, listWidget, 
         this.filter = filterString;
 
     } else if( filterString == '' && this.filter != '' ) {
-
         // search was cleared, so re-initialize the list!
-        listWidget.mojo.setLength( this.scheduleItems.length );
-        listWidget.mojo.setCount( this.scheduleItems.length );
-        this.controller.modelChanged(this.listModel);
-        this.showFiltered( this.activeViewFilter );
-
+        this.filter = '';
+        //listWidget.mojo.setLength( this.scheduleItems.length );
+        //listWidget.mojo.setCount( this.scheduleItems.length );
+        //listWidget.mojo.invalidateItems( 0 );
+        //this.controller.modelChanged(this.listModel);
+        //this.showFiltered( this.activeViewFilter );
+        listWidget.mojo.noticeUpdatedItems( 0, that.scheduleItems );
     } else {
         //if( that.listModel.items.length > 0 ) {
         //    that.listModel.items.push.apply( that.listModel.items, that.getItems( count, that.listModel.items.length ) );
         //}
 
-        that.updateListWithNewItems.delay(.1, listWidget, offset, that.scheduleItems.slice(offset, offset + count));
+        this.updateListWithNewItems.delay(.1, listWidget, offset, this.scheduleItems.slice(offset, offset + count));
 
         // tell the list how many overall items are available. has effect only at first call.
-        listWidget.mojo.setLength( that.scheduleItems.length );
+        listWidget.mojo.setLength( this.scheduleItems.length );
     }
 }
 
@@ -437,10 +438,10 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
 }
 
 ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
-    console.log("***** STARTING INCUBATING...");
+    console.log("starting incubating response...");
 
     if( transport.responseXML === null && transport.responseText !== null ) {
-        console.log("***** STARTING TO PARSE FROM STRING...");
+        console.log("starting to parse response string...");
         transport.responseXML = new DOMParser().parseFromString(transport.responseText, 'text/xml');
     }
 
@@ -460,7 +461,7 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
         this.scheduleItems = [];
     }
 
-    console.log("***** STARTING TO PARSE...");
+    console.log("starting to process xml items...");
 
     // CALL A RECURSIVE FUNCTION TO AVOID THE 10sec SCRIPT KILLER
     // after the recursion is finished, the function calls
@@ -516,7 +517,7 @@ ScheduleAssistant.prototype.processItem = function(i, results) {
 }
 
 ScheduleAssistant.prototype.saveScheduleItems = function() {
-    console.log("***** PARSED, NOW STARTING TO SAVE...");
+    console.log("processed xml, now saving...");
 
     if( this.scheduleItems.length > 0 ) {
         // nuke all documents
@@ -540,7 +541,7 @@ ScheduleAssistant.prototype.saveScheduleItems = function() {
             that.viewFilterMenuModel.items[1].toggleCmd = 'cmdShowAll';
             that.controller.modelChanged(that.viewFilterMenuModel);
 
-            console.log("***** SUCCESSFULLY SAVED.");
+            console.log("successfully saved.");
         });
     }
 }
