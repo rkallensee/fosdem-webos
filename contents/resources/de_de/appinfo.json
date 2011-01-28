@@ -1,9 +1,9 @@
 {
-    "id": "net.webpresso.fosdem",
-    "version": "0.2.3",
+    "id": "net.webpresso.fosdem-beta",
+    "version": "0.2.4",
     "vendor": "webpresso.net",
     "type": "web",
     "main": "../../index.html",
-    "title": "FOSDEM Programm",
+    "title": "FOSDEM Programm Beta",
     "icon": "../../icon.png"
 }

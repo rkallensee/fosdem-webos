@@ -78,7 +78,7 @@ Primary Category: Productivity & Utilities
 Secondary Tags: Lists
 
 
-UPDATE: The application now contains detailed room maps in the event details. |||
+UPDATE: The application now contains detailed room maps in the event details. Also fixed a timeout problem. |||
 
 This application was designed mainly as a schedule for FOSDEM, but also as assistant for your conference weekend in Brussels. It downloads the schedule from FOSDEM server and saves it to your device for offline use. You can also set your favorite schedule items to plan your conference visit. There are also various maps included for your orientation as well as feeds for having a quick glance what's going on at the FOSDEM website, identi.ca and Twitter hashtags and so on.
 
@@ -102,7 +102,7 @@ Primary Category: Produktivität
 Secondary Tags: Listen
 
 
-UPDATE: Die Anwendung enthält jetzt auch detaillierte Pläne der einzelnen Räume in den Event-Details. |||
+UPDATE: Die Anwendung enthält jetzt auch detaillierte Pläne der einzelnen Räume in den Event-Details. Außerdem wurde ein Timeout-Problem behoben. |||
 
 Diese Anwendung wurde insbesondere als Planer für die FOSDEM entwickelt, aber auch als Assistent für das gesamte Konferenz-Wochenende in Brüssel. Es lädt den Vortragsplan vom FOSDEM-Server und speichert ihn für spätere Offline-Benutzung auf dem Gerät. Vorträge können als Favorit markiert werden. Außerdem sind einige Karten zur Orientierung enthalten sowie Feeds von der FOSDEM-Website und identi.ca + Twitter.
 
@@ -127,7 +127,7 @@ Primary Category: Productivity & Utilities
 Secondary Tags: Lists
 
 
-UPDATE: The application now contains detailed room maps in the event details. |||
+UPDATE: The application now contains detailed room maps in the event details. Also fixed a timeout problem. |||
 
 This application was designed mainly as a schedule for FOSDEM, but also as assistant for your conference weekend in Brussels. It downloads the schedule from FOSDEM server and saves it to your device for offline use. You can also set your favorite schedule items to plan your conference visit. There are also various maps included for your orientation as well as feeds for having a quick glance what's going on at the FOSDEM website, identi.ca and Twitter hashtags and so on.
 
@@ -149,7 +149,7 @@ Primary Category: Produktivität
 Secondary Tags: Listen
 
 
-UPDATE: Die Anwendung enthält jetzt auch detaillierte Pläne der einzelnen Räume in den Event-Details. |||
+UPDATE: Die Anwendung enthält jetzt auch detaillierte Pläne der einzelnen Räume in den Event-Details. Außerdem wurde ein Timeout-Problem behoben. |||
 
 Diese Anwendung ist hauptsächlich ein Vortragsplaner für die FOSDEM, aber auch ein Assistent für das gesamte Konferenz-Wochenende in Brüssel. Es lädt den Vortragsplan vom FOSDEM-Server und speichert ihn für spätere Offline-Benutzung auf dem Gerät. Vorträge können als Favorit markiert werden. Außerdem sind einige Karten zur Orientierung enthalten sowie Feeds von der FOSDEM-Website und identi.ca + Twitter.
 

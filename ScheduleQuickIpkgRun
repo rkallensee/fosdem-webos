@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # close and remove old versions
-palm-launch -c net.webpresso.fosdem
-palm-install -r net.webpresso.fosdem
+palm-launch -c net.webpresso.fosdem-beta
+palm-install -r net.webpresso.fosdem-beta
 
 # package, install and run FOSDEM app on palm emulator
 palm-package contents
-palm-install net.webpresso.fosdem_0.2.3_all.ipk
-palm-launch net.webpresso.fosdem
+palm-install net.webpresso.fosdem-beta_0.2.4_all.ipk
+palm-launch net.webpresso.fosdem-beta
