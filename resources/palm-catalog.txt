@@ -78,7 +78,7 @@ Primary Category: Productivity & Utilities
 Secondary Tags: Lists
 
 
-UPDATE: The application now contains detailed room maps in the event details. Also fixed a timeout problem. |||
+UPDATE: The application now contains detailed room maps in the event details. Also a timeout problem was fixed. |||
 
 This application was designed mainly as a schedule for FOSDEM, but also as assistant for your conference weekend in Brussels. It downloads the schedule from FOSDEM server and saves it to your device for offline use. You can also set your favorite schedule items to plan your conference visit. There are also various maps included for your orientation as well as feeds for having a quick glance what's going on at the FOSDEM website, identi.ca and Twitter hashtags and so on.
 
@@ -127,7 +127,7 @@ Primary Category: Productivity & Utilities
 Secondary Tags: Lists
 
 
-UPDATE: The application now contains detailed room maps in the event details. Also fixed a timeout problem. |||
+UPDATE: The application now contains detailed room maps in the event details. Also a timeout problem was fixed. |||
 
 This application was designed mainly as a schedule for FOSDEM, but also as assistant for your conference weekend in Brussels. It downloads the schedule from FOSDEM server and saves it to your device for offline use. You can also set your favorite schedule items to plan your conference visit. There are also various maps included for your orientation as well as feeds for having a quick glance what's going on at the FOSDEM website, identi.ca and Twitter hashtags and so on.
 
