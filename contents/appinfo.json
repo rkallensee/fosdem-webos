@@ -1,9 +1,9 @@
 {
-    "id": "net.webpresso.fosdem",
-    "version": "0.2.4",
+    "id": "net.webpresso.republica",
+    "version": "0.2.5",
     "vendor": "webpresso.net",
     "type": "web",
     "main": "index.html",
-    "title": "FOSDEM Schedule",
+    "title": "re:publica Schedule",
     "icon": "icon.png"
 }

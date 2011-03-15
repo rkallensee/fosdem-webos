@@ -21,7 +21,7 @@
     "Maps": "Karten",
     "Help": "Hilfe",
 
-    "FOSDEM website": "FOSDEM-Website",
+    "re:publica website": "re:publica-Website",
     "identi.ca account": "identi.ca-Account",
     "identi.ca group": "identi.ca-Gruppe",
     "identi.ca tag": "identi.ca-Tag",
@@ -33,8 +33,8 @@
     "STIB-MIVB (web)": "STIB-MIVB (web)",
     "Tram map": "Straßenbahnkarte",
 
-    "Welcome to the FOSDEM app!": "Willkommen in der FOSDEM-App!",
-    "There is currently no schedule stored on your phone - do you want to download it now from FOSDEM server? This may take a while. Please remember to refresh it periodically.": "Momentan ist kein Programm auf Ihrem Gerät gespeichert - wollen Sie es jetzt vom FOSDEM-Server laden? Dies benötigt etwas Zeit. Bitte denken Sie daran, das Programm regelmäßig zu aktualisieren.",
+    "Welcome to the re:publica app!": "Willkommen in der re:publica-App!",
+    "There is currently no schedule stored on your phone - do you want to download it now from re:publica server? This may take a while. Please remember to refresh it periodically.": "Momentan ist kein Programm auf Ihrem Gerät gespeichert - wollen Sie es jetzt vom re:publica-Server laden? Dies benötigt etwas Zeit. Bitte denken Sie daran, das Programm regelmäßig zu aktualisieren.",
     "Refresh schedule": "Programm aktualisieren",
     "Do you really want to refresh the schedule stored on your device? An internet connection is required. The refresh may take a while. Favorites are preserved.": "Wollen Sie wirklich das auf Ihrem Gerät gespeicherte Programm aktualisieren? Eine Internet-Verbindung ist erforderlich. Das Aktualisieren benötigt etwas Zeit. Favoriten bleiben erhalten.",
 

@@ -18,8 +18,7 @@ ScheduleAssistant.prototype.setup = function() {
     //console.log("***** INITIALIZING SCHEDULE...");
 
     // this setting is very important: it stores the name of the conference!
-    //this.conference = 'FOSDEM';
-    this.conference = 'FOSDEM';
+    this.conference = 're:publica';
     this.conferenceYear = '2011';
 
     this.controller.setupWidget(
@@ -170,8 +169,8 @@ ScheduleAssistant.prototype.handleDbError = function(transaction, error) {
                     that.spinner('off');
                 }
             },
-            title: $L("Welcome to the FOSDEM app!"),
-            message: $L("There is currently no schedule stored on your phone - do you want to download it now from FOSDEM server? This may take a while. Please remember to refresh it periodically."),
+            title: $L("Welcome to the re:publica app!"),
+            message: $L("There is currently no schedule stored on your phone - do you want to download it now from re:publica server? This may take a while. Please remember to refresh it periodically."),
             choices:[
                  {label:$L('Yes'), value:"refresh", type:'affirmative'},
                  {label:$L("No"), value:"well", type:'negative'}
