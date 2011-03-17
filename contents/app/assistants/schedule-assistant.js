@@ -410,17 +410,20 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
             } else {
                 console.log("***** STARTING AJAX REQUEST...");
 
-                var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
+                //var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
                 //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
                 //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
+                var xcalURL = "http://re-publica.de/11/rp2011.json"; // re:publica 2011 JSON
+                var speakerURL = "http://re-publica.de/11/speakers.json"; // re:publica 2011 speaker JSON
 
-                var request = new Ajax.Request(xcalURL, {
+                var request = new Ajax.Request(speakerURL, {
 
                     method: 'get',
-                    evalJSON: false,
+                    evalJSON: true, // json!
                     evalJS: false,
                     onSuccess: function(transport){
-                        that.incubateSetAndSaveResponse( transport );
+                        that.tmpSpeakers = Mojo.parseJSON( transport.responseText );
+                        that.refreshScheduleSecondPart();
                     },
                     onFailure: function(){
                         Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
@@ -436,15 +439,31 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
     });
 }
 
+ScheduleAssistant.prototype.refreshScheduleSecondPart = function() {
+    //console.log("***** STARTING REFRESH SCHEDULE...");
+
+    console.log("***** STARTING SECOND AJAX REQUEST...");
+
+    var xcalURL = "http://re-publica.de/11/rp2011.json"; // re:publica 2011 JSON
+
+    var request = new Ajax.Request(xcalURL, {
+
+        method: 'get',
+        evalJSON: true, // json!
+        evalJS: false,
+        onSuccess: function(transport){
+            that.incubateSetAndSaveResponse( transport );
+        },
+        onFailure: function(){
+            Mojo.Controller.errorDialog($L('Can\'t connect to server. Please make sure your internet connection is available.'));
+            that.spinner('off');
+        }
+
+    });
+}
+
 ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
     console.log("starting incubating response...");
-
-    if( transport.responseXML === null && transport.responseText !== null ) {
-        console.log("starting to parse response string...");
-        transport.responseXML = new DOMParser().parseFromString(transport.responseText, 'text/xml');
-    }
-
-    eventCounter = 0;
 
     // temporarily save favorites' uid here to reassign state later
     that.tempFavorites = [];  // TODO: Store favs in depot?
@@ -454,18 +473,86 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
         }
     }
 
-    var vevents = jQuery(transport.responseXML.documentElement).find('vevent');
+    console.log("starting to process json items...");
 
-    if( vevents.size() > 0 ) {
+    //if( vevents.size() > 0 ) {
         this.scheduleItems = [];
-    }
+    //}
 
-    console.log("starting to process xml items...");
+    var scheduleJSON = Mojo.parseJSON( transport.responseText );
+
+    jQuery.each( scheduleJSON, function( day, dayEvents ) {
+        myday = day;
+        jQuery.each( dayEvents, function( location, locationEvents ) {
+            mylocation = location;
+            jQuery.each( locationEvents, function( time, event ) {
+
+                var isFavorite = jQuery.inArray(
+                    event.id,
+                    that.tempFavorites
+                ) >= 0; // returns -1 if not found, otherwise the index
+
+                var day = myday.toString().split('.');
+                var time = time.toString().split(':');
+
+                if( !time[1] ) {
+                    time[1] = '00'; // fix broken times
+                }
+
+                // simulate xcal dtstart
+                var dtstart = day[2] + '' + day[1] + '' + day[0] + 'T' + time[0] + '' + time[1] + '00'; // 20100822T174500
+
+                var dateObj = that.parseDate( dtstart );
+
+                var speakerName = [];
+                var speakerDescText = '';
+
+                for( var i = 0; i < that.tmpSpeakers.length; i++ ) {
+                    if( jQuery.inArray( that.tmpSpeakers[i].id, event.speaker ) >= 0 ) {
+                        speakerName.push( that.tmpSpeakers[i].name );
+
+                        speakerDescText += '<br /><br />';
+
+                        if( that.tmpSpeakers[i].imageurl != null ) {
+                            speakerDescText += '<img src="'+that.tmpSpeakers[i].imageurl+'" width="100" style="float: left; margin: 0 5px 0 0;"/>';
+                        }
+
+                        speakerDescText += '<a href="'+that.tmpSpeakers[i].permalink+'">'
+                            +that.tmpSpeakers[i].name+'</a><br /><br />'
+                            +that.tmpSpeakers[i].bio+'<div style="clear: left;"></div>';
+                    }
+                }
+
+                var eventLengthText = '<i>Länge: <b>'+event.length+' Minuten</b></i><br /><br />';
+
+                that.scheduleItems.push({
+                    id: event.id,
+                    date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year),
+                    dtstart: dtstart,
+                    time: $L(dateObj.hour + ':' + dateObj.minute),
+                    location: mylocation,
+                    locationImg: '',
+                    title: event.title,
+                    description: eventLengthText + event.description + speakerDescText,
+                    attendee: speakerName.join(', '),
+                    url: event.permalink,
+                    eventid: event.id,
+                    pbfeventid: event.id,
+                    favorite: isFavorite
+                });
+
+            });
+        });
+    });
+
+    this.saveScheduleItems();
+
+
 
     // CALL A RECURSIVE FUNCTION TO AVOID THE 10sec SCRIPT KILLER
     // after the recursion is finished, the function calls
     // saveScheduleItems() to save all processed items.
-    this.processItem(0, vevents);
+    //////////this.processItem(0, vevents);
 }
 
 ScheduleAssistant.prototype.processItem = function(i, results) {
