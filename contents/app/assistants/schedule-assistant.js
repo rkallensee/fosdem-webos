@@ -475,11 +475,9 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
 
     console.log("starting to process json items...");
 
-    //if( vevents.size() > 0 ) {
-        this.scheduleItems = [];
-    //}
-
     var scheduleJSON = Mojo.parseJSON( transport.responseText );
+
+    this.scheduleItems = [];
 
     jQuery.each( scheduleJSON, function( day, dayEvents ) {
         myday = day;
@@ -511,19 +509,21 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
                     if( jQuery.inArray( that.tmpSpeakers[i].id, event.speaker ) >= 0 ) {
                         speakerName.push( that.tmpSpeakers[i].name );
 
-                        speakerDescText += '<br /><br />';
+                        speakerDescText += '<div class="speakerDesc">';
 
                         if( that.tmpSpeakers[i].imageurl != null ) {
-                            speakerDescText += '<img src="'+that.tmpSpeakers[i].imageurl+'" width="100" style="float: left; margin: 0 5px 0 0;"/>';
+                            speakerDescText += '<img src="'+that.tmpSpeakers[i].imageurl+'" width="100" class="speakerImg" />';
                         }
 
                         speakerDescText += '<a href="'+that.tmpSpeakers[i].permalink+'">'
                             +that.tmpSpeakers[i].name+'</a><br /><br />'
-                            +that.tmpSpeakers[i].bio+'<div style="clear: left;"></div>';
+                            +that.strip_tags( that.tmpSpeakers[i].bio )+'<div class="speakerClear"></div></div>';
                     }
                 }
 
-                var eventLengthText = '<i>Länge: <b>'+event.length+' Minuten</b></i><br /><br />';
+                event.description = that.strip_tags( event.description );
+
+                var eventLengthText = '<br /><br /><i>Länge: <b>'+event.length+' Minuten</b></i>';
 
                 that.scheduleItems.push({
                     id: event.id,
@@ -533,7 +533,7 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
                     location: mylocation,
                     locationImg: '',
                     title: event.title,
-                    description: eventLengthText + event.description + speakerDescText,
+                    description: event.description + eventLengthText + speakerDescText,
                     attendee: speakerName.join(', '),
                     url: event.permalink,
                     eventid: event.id,
@@ -744,4 +744,16 @@ ScheduleAssistant.prototype.parseDate = function(xCalDate){
         'hour'      : xCalDate.substr(9,2),
         'minute'    : xCalDate.substr(11,2)
     }
+}
+
+ScheduleAssistant.prototype.strip_tags = function(input, allowed) {
+    // FUNCTION FOUND HERE:
+    // http://phpjs.org/functions/strip_tags:535
+    // (GPL / MIT licenses)
+    allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
+    var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
+        commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+    return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
+        return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
+    });
 }

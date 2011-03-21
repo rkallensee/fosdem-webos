@@ -1,39 +1,39 @@
 /* Put Application specific CSS here. */
 
 #ScheduleListContainer .palm-row-wrapper .star {
-	float: right;
-	width: 20px;
-	height: 20px;
-	margin: 15px 10px 10px 10px;
-	background: url(../images/emblem-favorite-inactive.png) left top no-repeat;
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin: 15px 10px 10px 10px;
+    background: url(../images/emblem-favorite-inactive.png) left top no-repeat;
 }
 
 #ScheduleListContainer .palm-row-wrapper .starActive {
-	background: url(../images/emblem-favorite.png) left top no-repeat;
+    background: url(../images/emblem-favorite.png) left top no-repeat;
 }
 
 #ScheduleListContainer .palm-row-wrapper .title {
-	margin-top: -5px;
+    margin-top: -5px;
 }
 
 #ScheduleListContainer .palm-row-wrapper .preview {
-	margin-top: -10px;
-	padding: 0 15px 10px 15px;
+    margin-top: -10px;
+    padding: 0 15px 10px 15px;
 }
 
 #ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .preview {
-	margin-top: 0;
-	padding-top: 10px;
+    margin-top: 0;
+    padding-top: 10px;
 }
 
 #ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 #ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav .title {
-	text-align: left !important;
-	font-size: 0.8em;
-	padding-top: 15px;
+    text-align: left !important;
+    font-size: 0.8em;
+    padding-top: 15px;
 }
 
 #schedule_spinner,
@@ -47,50 +47,87 @@
 }
 
 .allbtn {
-	background: url(../images/show-all-btn.png) center no-repeat;
+    background: url(../images/show-all-btn.png) center no-repeat;
 }
 
 .favbtn {
-	background: url(../images/emblem-favorite-btn.png) center no-repeat;
+    background: url(../images/emblem-favorite-btn.png) center no-repeat;
 }
 
 .upcomingbtn {
-	background: url(../images/show-upcoming-btn.png) center no-repeat;
+    background: url(../images/show-upcoming-btn.png) center no-repeat;
 }
 
 #FeedListContainer .palm-row-wrapper .title {
-	font-size: 0.85em;
-	margin-top: -5px;
+    font-size: 0.85em;
+    margin-top: -5px;
 }
 
 #FeedListContainer .palm-row-wrapper .preview {
-	margin-top: -10px;
-	padding-bottom: 10px;
+    margin-top: -10px;
+    padding-bottom: 10px;
 }
 
 /* fade top/bottom */
 
 .fade-top-with-arrow {
-	position: fixed; 
-	top: 0; 
-	/*z-index: 100000;*/
-	height: 54px; 
-	width: 100%;
-	background: url(../images/fade-top-with-arrow.png) top center repeat-x;
-	-webkit-palm-mouse-target: ignore;
+    position: fixed;
+    top: 0;
+    /*z-index: 100000;*/
+    height: 54px;
+    width: 100%;
+    background: url(../images/fade-top-with-arrow.png) top center repeat-x;
+    -webkit-palm-mouse-target: ignore;
 }
 
 .fade-bottom-arrow-with-buttons {
-	position: fixed; 
-	bottom: 40px;
-	/*z-index: 100000;*/
-	height: 54px; 
-	width: 100%;
-	background: url(../images/fade-arrow-down.png) center bottom no-repeat;
-	-webkit-palm-mouse-target: ignore;
+    position: fixed;
+    bottom: 40px;
+    /*z-index: 100000;*/
+    height: 54px;
+    width: 100%;
+    background: url(../images/fade-arrow-down.png) center bottom no-repeat;
+    -webkit-palm-mouse-target: ignore;
 }
 
 /* header icon */
 .palm-page-header-wrapper > .scheduleapp-header-icon {
     background: url(../images/mini-icon.png) center no-repeat;
+}
+
+/* re:publica */
+
+#ScheduleListContainer .speakerDesc {
+    background-color: #DDDDDD;
+    -webkit-border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #EEEEEE;
+    margin-top: 15px;
+}
+
+#ScheduleListContainer img.speakerImg {
+    float: left;
+    margin: 0 5px 0 0;
+}
+
+#ScheduleListContainer .speakerClear {
+    clear: left;
+}
+
+#ScheduleListContainer .detailsWebLink {
+    display: none;
+}
+
+#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav {
+    margin: 0px 15px 20px;
+    background-color: #CCCCCC;
+    padding: 5px;
+    -webkit-border-radius: 8px;
+    border: 1px solid #DDDDDD;
+    overflow: hidden;
+}
+
+#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav .title {
+    font-size: 0.75em;
+    padding-top: 20px;
 }
