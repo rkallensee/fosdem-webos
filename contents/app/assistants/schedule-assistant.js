@@ -410,9 +410,6 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
             } else {
                 console.log("***** STARTING AJAX REQUEST...");
 
-                //var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
-                //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
-                //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
                 var xcalURL = "http://re-publica.de/11/rp2011.json"; // re:publica 2011 JSON
                 var speakerURL = "http://re-publica.de/11/speakers.json"; // re:publica 2011 speaker JSON
 
@@ -546,64 +543,10 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
     });
 
     this.saveScheduleItems();
-
-
-
-    // CALL A RECURSIVE FUNCTION TO AVOID THE 10sec SCRIPT KILLER
-    // after the recursion is finished, the function calls
-    // saveScheduleItems() to save all processed items.
-    //////////this.processItem(0, vevents);
-}
-
-ScheduleAssistant.prototype.processItem = function(i, results) {
-
-    var item = jQuery(results).get(i);
-
-    var dateObj = that.parseDate(jQuery(item).children('dtstart').text());
-
-    var url = jQuery(item).children('url').text();
-
-    if( url.indexOf( "/2010/schedule//2010/schedule/" ) != -1 ) {
-        // fixing defect urls from xcal
-        url = url.replace( "/2010/schedule/", "" );
-    }
-    if( url.indexOf( "/2011/schedule//2011/schedule/" ) != -1 ) {
-        // fixing defect urls from xcal
-        url = url.replace( "/2011/schedule/", "" );
-    }
-
-    var isFavorite = jQuery.inArray(
-        jQuery(item).children('uid').text(),
-        that.tempFavorites
-    ) >= 0; // returns -1 if not found, otherwise the index
-
-    this.scheduleItems.push({
-        id: i,
-        date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year),
-        dtstart: $L(jQuery(item).children('dtstart').text()),
-        time: $L(dateObj.hour + ':' + dateObj.minute),
-        location: $L(jQuery(item).children('location').text()),
-        locationImg: jQuery(item).children('location').text().toLowerCase().split('.').join(''),
-        title: $L(jQuery(item).children('summary').text()),
-        description: $L(jQuery(item).children('description').text()),
-        attendee: $L(jQuery(item).children('attendee').text()),
-        url: url,
-        eventid: jQuery(item).children('uid').text(),
-        pbfeventid: jQuery(item).children("[nodeName=pentabarf:event-id]").text(),
-        favorite: isFavorite
-    });
-
-    if( i >= jQuery(results).size()-1 ) {
-        this.saveScheduleItems();
-    } else {
-        if( i < jQuery(results).size() ) {
-            this.processItem.bind(this).defer(i+1, results)
-        }
-    }
 }
 
 ScheduleAssistant.prototype.saveScheduleItems = function() {
-    console.log("processed xml, now saving...");
+    console.log("processed json, now saving...");
 
     if( this.scheduleItems.length > 0 ) {
         // nuke all documents

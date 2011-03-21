@@ -4,7 +4,7 @@
 palm-launch -c net.webpresso.republica
 palm-install -r net.webpresso.republica
 
-# package, install and run FOSDEM app on palm emulator
+# package, install and run app on palm emulator
 palm-package contents
 palm-install net.webpresso.republica_0.2.5_all.ipk
 palm-launch net.webpresso.republica
