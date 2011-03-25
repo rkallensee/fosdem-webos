@@ -2,7 +2,7 @@ var ScheduleViewSubmenuModel = {
     label: $L('Show'),
     items: [
         {label: $L('Schedule'), command: 'cmdSchedule', shortcut: 's'},
-        {label: $L('Feeds'), command: 'cmdFeeds', shortcut: 'f'},
+        {label: $L('News'), command: 'cmdFeeds', shortcut: 'f'},
         {label: $L('Maps'), command: 'cmdMap', shortcut: 'm'},
         {label: $L('Help'), command: 'cmdHelp', shortcut: 'h'}
     ]
