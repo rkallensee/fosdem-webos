@@ -189,15 +189,6 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
         items = [];
     }
 
-    // dynamically update the items if they don't have the locationImg
-    // property (which is new since 0.2.3)
-    if( items[0] && items[0].location && !items[0].locationImg ) {
-        for( var i=0; i<items.length; i++ ) {
-            items[i].locationImg = items[i].location.toLowerCase().split('.').join('');
-            this.bucket.save( items[i] );
-        }
-    }
-
     //console.log("***** THERE ARE "+items.length+" items!");
 
     items.sort( that.orderSchedule );
