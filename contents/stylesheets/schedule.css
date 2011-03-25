@@ -103,6 +103,7 @@
     padding: 15px;
     border: 1px solid #EEEEEE;
     margin-top: 15px;
+    z-index: 0;
 }
 
 #ScheduleListContainer img.speakerImg {
@@ -119,7 +120,7 @@
 }
 
 #ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav {
-    margin: 0px 15px 20px;
+    margin: 20px 15px 10px;
     background-color: #CCCCCC;
     padding: 5px;
     -webkit-border-radius: 8px;
@@ -130,4 +131,8 @@
 #ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav .title {
     font-size: 0.75em;
     padding-top: 20px;
+}
+
+#ScheduleListContainer .palm-row-wrapper .preview {
+    margin-top: 0px;
 }

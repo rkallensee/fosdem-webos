@@ -169,8 +169,8 @@ ScheduleAssistant.prototype.handleDbError = function(transaction, error) {
                     that.spinner('off');
                 }
             },
-            title: $L("Welcome to the re:publica app!"),
-            message: $L("There is currently no schedule stored on your phone - do you want to download it now from re:publica server? This may take a while. Please remember to refresh it periodically."),
+            title: $L("Welcome!"),
+            message: $L("Do you want to download the schedule data from re:publica server? This may take a while. Please remember to refresh it periodically."),
             choices:[
                  {label:$L('Yes'), value:"refresh", type:'affirmative'},
                  {label:$L("No"), value:"well", type:'negative'}
@@ -522,6 +522,8 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
 
                 var eventLengthText = '<br /><br /><i>Länge: <b>'+event.length+' Minuten</b></i>';
 
+                var attendeeText = ( speakerName.length > 0 ) ? ( '(' + speakerName.join(', ') + ')' ) : '';
+
                 that.scheduleItems.push({
                     id: event.id,
                     date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year),
@@ -531,7 +533,7 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
                     locationImg: '',
                     title: event.title,
                     description: event.description + eventLengthText + speakerDescText,
-                    attendee: speakerName.join(', '),
+                    attendee: attendeeText,
                     url: event.permalink,
                     eventid: event.id,
                     pbfeventid: event.id,

@@ -11,10 +11,10 @@ var ScheduleViewSubmenuModel = {
 var FeedViewSubmenuModel = {
     label: $L('Select feed'),
     items: [
-        {label: $L('re:publica website'), command: 'cmdFeedWebsite'},
-        {label: $L('identi.ca tag #rp11'), command: 'cmdFeedSnTag'},
-        {label: $L('twitter account'), command: 'cmdFeedTwAccount'},
-        {label: $L('twitter tag #rp11'), command: 'cmdFeedTwTag'}
+        {label: $L('re-publica.de'), command: 'cmdFeedWebsite'},
+        {label: $L('@republica'), command: 'cmdFeedTwAccount'},
+        {label: $L('#rp11 (Twitter)'), command: 'cmdFeedTwTag'},
+        {label: $L('#rp11 (Identi.ca)'), command: 'cmdFeedSnTag'}
     ]
 };
 

@@ -2,17 +2,17 @@
     <div class="palm-row-wrapper">
         <div class="star" id="star-#{id}"></div>
         <div class="title">#{-title}</div>
-        <div class="preview">#{-time} at #{-location} by #{-attendee}</div>
+        <div class="preview">#{-time} at #{-location} #{-attendee}</div>
         <div id="eventDrawer-#{id}" class="schedule_event_drawer" x-mojo-element="Drawer">
-            <div class="preview">
-                #{-description}
-                <br /><br />
-                <a href="#{-url}" class="detailsWebLink">Show event details on website</a>
-            </div>
             <div class="checkAsFav">
                 <div x-mojo-element="ToggleButton" class="left" name="favItemCheckbox"></div>
                 <div class="title left">Mark as favorite</div>
                 <div class="clear"></div>
+            </div>
+            <div class="preview">
+                #{-description}
+                <br /><br />
+                <a href="#{-url}" class="detailsWebLink">Show event details on website</a>
             </div>
         </div>
     </div>
