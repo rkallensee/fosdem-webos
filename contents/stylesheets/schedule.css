@@ -104,15 +104,16 @@
     border: 1px solid #EEEEEE;
     margin-top: 15px;
     z-index: 0;
+    text-align: center;
 }
 
 #ScheduleListContainer .speakerContainer {
     width: 90px;
-    height: 140px;
     overflow: visible;
     margin-right: 10px;
     margin-bottom: 10px;
-    float: left;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #ScheduleListContainer img.speakerImg {

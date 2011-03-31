@@ -515,6 +515,10 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
 
                 speakerDescText += '<div class="speakerClear"></div></div>';
 
+                if( speakerName.length === 0 ) {
+                    speakerDescText = '';
+                }
+
                 event.description = that.strip_tags( event.description );
 
                 var eventLengthText = '<br /><br /><i>Länge: <b>'+event.length+' Minuten</b></i>';
