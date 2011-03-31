@@ -170,7 +170,7 @@ Primary Category: Productivity & Utilities
 Secondary Tags: Lists
 
 
-This application is a planner for re:publica. It downloads the schedule from re:publica server and saves it to your device. So you can use the schedule offline. You can also set your favorite schedule items to plan your conference visit. There are also various maps included for your orientation as well as feeds for having a quick glance what's going on at the re:publica website, Twitter and identi.ca.
+This application is a planner for re:publica 2011. It downloads the schedule from re:publica server and saves it to your device. So you can use the schedule offline. You can also set your favorite schedule items to plan your conference visit. There are also various maps included for your orientation as well as feeds for having a quick glance what's going on at the re:publica website, Twitter and identi.ca.
 
 The app was created with the support of re:publica, responsible for development is Raphael Kallensee.
 
@@ -192,7 +192,7 @@ Primary Category: Produktivität
 Secondary Tags: Listen
 
 
-Diese Anwendung ist ein Planer für die re:publica. Sie lädt den Vortragsplan vom re:publica-Server und speichert ihn für spätere Offline-Benutzung auf dem Gerät. Vorträge können als Favorit markiert werden. Außerdem sind einige Karten zur Orientierung enthalten sowie Feeds von der re:publica-Website und Neues von Twitter und identi.ca.
+Diese Anwendung ist ein Planer für die re:publica 2011. Sie lädt den Vortragsplan vom re:publica-Server und speichert ihn für spätere Offline-Benutzung auf dem Gerät. Vorträge können als Favorit markiert werden. Außerdem sind einige Karten zur Orientierung enthalten sowie Feeds von der re:publica-Website und Neues von Twitter und identi.ca.
 
 Die App entstand mit freundlicher Unterstützung der re:publica, verantwortlich für die Entwicklung ist Raphael Kallensee.
 
