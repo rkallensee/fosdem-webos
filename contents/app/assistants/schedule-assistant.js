@@ -491,23 +491,29 @@ ScheduleAssistant.prototype.incubateSetAndSaveResponse = function( transport ) {
                 var dateObj = that.parseDate( dtstart );
 
                 var speakerName = [];
-                var speakerDescText = '';
+                var speakerDescText = '<div class="speakerDesc">';
 
                 for( var i = 0; i < that.tmpSpeakers.length; i++ ) {
                     if( jQuery.inArray( that.tmpSpeakers[i].id, event.speaker ) >= 0 ) {
                         speakerName.push( that.tmpSpeakers[i].name );
 
-                        speakerDescText += '<div class="speakerDesc">';
+                        speakerDescText += '<div class="speakerContainer"><a href="'+that.tmpSpeakers[i].permalink+'">';
+                        speakerDescText += '<img src="';
 
                         if( that.tmpSpeakers[i].imageurl != null ) {
-                            speakerDescText += '<img src="'+that.tmpSpeakers[i].imageurl+'" width="100" class="speakerImg" />';
+                            speakerDescText += that.tmpSpeakers[i].imageurl;
+                        } else {
+                            speakerDescText += 'http://re-publica.de/11/wp-content/themes/rp11/_img/dummy180.png';
                         }
 
-                        speakerDescText += '<a href="'+that.tmpSpeakers[i].permalink+'">'
-                            +that.tmpSpeakers[i].name+'</a><br /><br />'
-                            +that.strip_tags( that.tmpSpeakers[i].bio )+'<div class="speakerClear"></div></div>';
+                        speakerDescText += '" class="speakerImg" /><br />';
+                        speakerDescText += that.tmpSpeakers[i].name+'</a></div>';
+
+                        //speakerDescText += that.strip_tags( that.tmpSpeakers[i].bio )+'<br /><br />'
                     }
                 }
+
+                speakerDescText += '<div class="speakerClear"></div></div>';
 
                 event.description = that.strip_tags( event.description );
 

@@ -106,9 +106,17 @@
     z-index: 0;
 }
 
-#ScheduleListContainer img.speakerImg {
+#ScheduleListContainer .speakerContainer {
+    width: 90px;
+    height: 140px;
+    overflow: visible;
+    margin-right: 10px;
+    margin-bottom: 10px;
     float: left;
-    margin: 0 5px 0 0;
+}
+
+#ScheduleListContainer img.speakerImg {
+    width: 90px;
 }
 
 #ScheduleListContainer .speakerClear {
