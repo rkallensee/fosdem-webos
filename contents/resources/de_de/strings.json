@@ -11,12 +11,10 @@
 
     "Main menu": "Hauptmenü",
     "Menu": "Menü",
-    "View options": "Anzeigeoptionen",
     "Select feed": "Feed wählen",
     "Select map": "Karte wählen",
 
     "Show": "Anzeigen",
-    "Schedule": "Programm",
     "Feeds (online)": "Feeds (online)",
     "Maps": "Karten",
     "Help": "Hilfe",
@@ -28,7 +26,6 @@
     "twitter account": "Twitter-Account",
     "twitter tag": "Twitter-Tag",
 
-    "Campus map": "Campus-Karte",
     "Neighborhood map": "Umgebungskarte",
     "STIB-MIVB (web)": "STIB-MIVB (web)",
     "Tram map": "Straßenbahnkarte",
