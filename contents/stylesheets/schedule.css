@@ -1,6 +1,7 @@
 /* Put Application specific CSS here. */
 
-#ScheduleListContainer .palm-row-wrapper .star {
+#ScheduleListContainer .palm-row-wrapper .star,
+#ScheduleDetailContainer .star {
     float: right;
     width: 20px;
     height: 20px;
@@ -8,7 +9,8 @@
     background: url(../images/emblem-favorite-inactive.png) left top no-repeat;
 }
 
-#ScheduleListContainer .palm-row-wrapper .starActive {
+#ScheduleListContainer .palm-row-wrapper .starActive,
+#ScheduleDetailContainer .starActive {
     background: url(../images/emblem-favorite.png) left top no-repeat;
 }
 
@@ -21,16 +23,23 @@
     padding: 0 15px 10px 15px;
 }
 
-#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .preview {
-    margin-top: 0;
-    padding-top: 10px;
+#ScheduleDetailContainer .palm-row-wrapper {
+    padding: 5px 10px;
 }
 
-#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav {
-    margin-bottom: 10px;
+#ScheduleDetailContainer .palm-row-wrapper .event-location-image img {
+    margin-top: 15px;
 }
 
-#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav .title {
+#ScheduleDetailContainer #event-drawer-description .preview,
+#ScheduleDetailContainer #event-drawer-more .preview {
+    margin-left: 0;
+    padding-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+#ScheduleDetailContainer #event-drawer-favorite .title {
     text-align: left !important;
     font-size: 0.8em;
     padding-top: 15px;
@@ -95,55 +104,3 @@
     background: url(../images/mini-icon.png) center no-repeat;
 }
 
-
-
-/*
-+#ScheduleListContainer .speakerDesc {
-+    background-color: #DDDDDD;
-+    -webkit-border-radius: 15px;
-+    padding: 15px;
-+    border: 1px solid #EEEEEE;
-+    margin-top: 15px;
-+    z-index: 0;
-+    text-align: center;
-+}
-+
-+#ScheduleListContainer .speakerContainer {
-+    width: 90px;
-+    overflow: visible;
-+    margin-right: 10px;
-+    margin-bottom: 10px;
-+    display: inline-block;
-+    vertical-align: top;
-+}
-+
-+#ScheduleListContainer img.speakerImg {
-+    width: 90px;
-+}
-+
-+#ScheduleListContainer .speakerClear {
-+    clear: left;
-+}
-+
-+#ScheduleListContainer .detailsWebLink {
-+    display: none;
-+}
-+
-+#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav {
-+    margin: 20px 15px 10px;
-+    background-color: #CCCCCC;
-+    padding: 5px;
-+    -webkit-border-radius: 8px;
-+    border: 1px solid #DDDDDD;
-+    overflow: hidden;
-+}
-+
-+#ScheduleListContainer .palm-row-wrapper .schedule_event_drawer .checkAsFav .title {
-+    font-size: 0.75em;
-+    padding-top: 20px;
-+}
-+
-+#ScheduleListContainer .palm-row-wrapper .preview {
-+    margin-top: 0px;
-+}
-*/

@@ -1,0 +1,93 @@
+<div id="ScheduleDetailContainer">
+    <div class="palm-page-header multi-line">
+        <div class="palm-page-header-wrapper">
+            <div class="star"></div>
+            <div class="icon scheduleapp-header-icon"></div>
+            <div class="event-title title">
+                Why political liberty depends on software freedom more than ever
+            </div>
+            <div class="event-speaker subtitle">by <span>Eben Moglen</span></div>
+        </div>
+    </div>
+
+    <div class="palm-list">
+        <table class="palm-divider collapsible" id="event-divider-timelocation" x-mojo-touch-feedback="delayed">
+            <tr>
+                <td class="left"></td>
+                <td class="label">Time and location:</td>
+                <td class="line" width="100%"></td>
+                <td><div id="event-toggler-timelocation" class="palm-arrow-expanded arrow_button"></div></td>
+                <td class="right"></td>
+            </tr>
+        </table>
+        <div id="event-drawer-timelocation" x-mojo-element="Drawer">
+            <div class="palm-row multi-line single">
+                <div class="palm-row-wrapper">
+                    <small>
+                        <div class="event-date"><span>February 5th, 2011</span>, <strong>10:00</strong></div>
+                        <div class="event-location">at <strong>Janson</strong></div>
+                        <div class="event-location-image"><center><img src="images/rooms/janson.png" alt="" /></center></div>
+                    </small>
+                </div>
+            </div>
+        </div>
+        <table class="palm-divider collapsible" id="event-divider-favorite" x-mojo-touch-feedback="delayed">
+            <tr>
+                <td class="left"></td>
+                <td class="label">Mark as favorite:</td>
+                <td class="line" width="100%"></td>
+                <td><div id="event-toggler-favorite" class="palm-arrow-expanded arrow_button"></div></td>
+                <td class="right"></td>
+            </tr>
+        </table>
+        <div id="event-drawer-favorite" x-mojo-element="Drawer">
+            <div class="palm-row multi-line single">
+                <div class="palm-row-wrapper">
+                    <div class="event-mark-as-fav">
+                        <div x-mojo-element="ToggleButton" class="left" id="favItemCheckbox"></div>
+                        <div class="title left">Mark as favorite</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="palm-divider collapsible" id="event-divider-description" x-mojo-touch-feedback="delayed">
+            <tr>
+                <td class="left"></td>
+                <td class="label">Description:</td>
+                <td class="line" width="100%"></td>
+                <td><div id="event-toggler-description" class="palm-arrow-expanded arrow_button"></div></td>
+                <td class="right"></td>
+            </tr>
+        </table>
+        <div id="event-drawer-description" x-mojo-element="Drawer">
+            <div class="palm-row multi-line single">
+                <div class="palm-row-wrapper">
+                    <div class="event-description preview">
+                    We have come a very long way since the beginning of free software. GNU, Android, Linux, Open Solaris,
+                    X, Apache, Perl &amp; other free software have changed &amp; are changing the world.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="palm-divider collapsible" id="event-divider-more" x-mojo-touch-feedback="delayed">
+            <tr>
+                <td class="left"></td>
+                <td class="label">More resources:</td>
+                <td class="line" width="100%"></td>
+                <td><div id="event-toggler-more" class="palm-arrow-expanded arrow_button"></div></td>
+                <td class="right"></td>
+            </tr>
+        </table>
+        <div id="event-drawer-more" x-mojo-element="Drawer">
+            <div class="palm-row multi-line single">
+                <div class="palm-row-wrapper">
+                    <div class="event-url preview"><a href="http://www.google.com">http://www.google.com</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="fade-top-with-arrow" x-mojo-scroll-fade="top"></div>
+<div class="fade-bottom-arrow-with-buttons" x-mojo-scroll-fade="bottom"></div>

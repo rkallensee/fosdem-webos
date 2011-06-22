@@ -1,13 +1,7 @@
 [
-    {
-        "source": "lib/submenu-model.js"
-    },
-    {
-        "source": "lib/utils.js"
-    },
-    {
-        "source": "app/assistants/stage-assistant.js"
-    },
+    {"source": "lib/submenu-model.js"},
+    {"source": "lib/utils.js"},
+    {"source": "app/assistants/stage-assistant.js"},
     {
         "scenes": "schedule",
         "source": "app/assistants/schedule-assistant.js"
@@ -47,5 +41,9 @@
     {
         "scenes": "feeds",
         "source": "vendor/jquery.timeago.t9n.js"
+    },
+    {
+        "scenes": "scheduleDetail",
+        "source": "app/assistants/scheduleDetail-assistant.js"
     }
 ]

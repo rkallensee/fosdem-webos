@@ -104,23 +104,17 @@ ScheduleAssistant.prototype.setup = function() {
         this.listModel
     );
 
-    // listener for list element tap
-    this.controller.listen('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
-
-    // bind propertyChange event of list model to handler (used for favorites)
-    this.controller.listen('schedule_list', Mojo.Event.propertyChange, this.listPropertyChanged.bindAsEventListener(this));
-
     this.spinnerModel = { spinning: false }
     this.controller.setupWidget("schedule_spinner", {spinnerSize: 'large'}, this.spinnerModel);
     $('schedule_scrim').hide();
-
-    // setup favorite checkbox widgets in item details drawer
-    this.controller.setupWidget('listCheckBox', {property: 'favorite', modelProperty: 'favorite'});
 }
 
 ScheduleAssistant.prototype.activate = function(event) {
     /* put in event handlers here that should only be in effect when this scene is active. For
        example, key handlers that are observing the document */
+
+    // listener for list element tap
+    this.controller.listen('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
 
     // it seems like we have to re-set this variable after the scene was popped in again via back gesture
     that = this; // this allows accessing the assistant object from other scopes. Ugly!
@@ -130,6 +124,9 @@ ScheduleAssistant.prototype.activate = function(event) {
 ScheduleAssistant.prototype.deactivate = function(event) {
     /* remove any event handlers you added in activate and do any other cleanup that should happen before
        this scene is popped or another scene is pushed on top */
+
+    // listener for list element tap
+    this.controller.stopListening('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
 
     // since "that" is global, maybe it's better to cleanup after scene became inactive.
     that = null;
@@ -390,10 +387,8 @@ ScheduleAssistant.prototype.handleCommand = function(event) {
 }
 
 ScheduleAssistant.prototype.listTapped = function(event) {
-    try {
-        var drawer = "eventDrawer-" + event.item.id;
-        this.controller.get(drawer).mojo.toggleState();
-    } catch (e) {}
+    // fire up detail scene
+    this.controller.stageController.pushScene('scheduleDetail', {event: event.item});
 }
 
 ScheduleAssistant.prototype.refreshSchedule = function() {
@@ -613,36 +608,6 @@ ScheduleAssistant.prototype.showFiltered = function(type) {
     }
 }
 
-// only "favorite" list property changes. this is handled here.
-ScheduleAssistant.prototype.listPropertyChanged = function(event) {
-    for( var i=0; i<this.scheduleItems.length; i++ ) {
-
-        // if model found and key is not undefined (prevent inserting a new item)
-        if( event.model.eventid == this.scheduleItems[i].eventid ) { //&& event.model.key != undefined ) {
-
-            if( event.value == true ) {
-                jQuery('#star-'+event.model.id).addClass('starActive');
-                this.scheduleItems[i].favorite = true;
-            } else {
-                jQuery('#star-'+event.model.id).removeClass('starActive');
-                this.scheduleItems[i].favorite = false;
-            }
-
-            // set open property to false to prevent saving drawer
-            // open/close state
-            this.scheduleItems[i].open = false;
-
-            // save the item
-            //this.bucket.save( this.scheduleItems[i] );
-            //console.log(this.scheduleItems[i].key);
-            this.bucket.save( this.scheduleItems[i], function(r) {
-                console.log( 'Updated item ' + r.key );
-            });
-        }
-    }
-    //console.log(event.property+"#"+event.value+"##"+event.model.key+"##"+event.model.favorite+"###"+event.model.pbfeventid);
-}
-
 ScheduleAssistant.prototype.parseDate = function(xCalDate){
     var months = new Array(
         $L('January'), $L('February'), $L('March'), $L('April'),
@@ -671,4 +636,3 @@ ScheduleAssistant.prototype.strip_tags = function(input, allowed) {
         return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
     });
 }
-
