@@ -114,7 +114,8 @@ ScheduleAssistant.prototype.activate = function(event) {
        example, key handlers that are observing the document */
 
     // listener for list element tap
-    this.controller.listen('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
+    this.listTappedHandler = this.listTapped.bindAsEventListener(this);
+    this.controller.listen('schedule_list', Mojo.Event.listTap, this.listTappedHandler);
 
     // it seems like we have to re-set this variable after the scene was popped in again via back gesture
     that = this; // this allows accessing the assistant object from other scopes. Ugly!
@@ -126,7 +127,7 @@ ScheduleAssistant.prototype.deactivate = function(event) {
        this scene is popped or another scene is pushed on top */
 
     // listener for list element tap
-    this.controller.stopListening('schedule_list', Mojo.Event.listTap, this.listTapped.bindAsEventListener(this));
+    this.controller.stopListening('schedule_list', Mojo.Event.listTap, this.listTappedHandler);
 
     // since "that" is global, maybe it's better to cleanup after scene became inactive.
     that = null;
@@ -135,6 +136,9 @@ ScheduleAssistant.prototype.deactivate = function(event) {
 ScheduleAssistant.prototype.cleanup = function(event) {
     /* this function should do any cleanup needed before the scene is destroyed as
        a result of being popped off the scene stack */
+
+    // listener for list element tap
+    this.controller.stopListening('schedule_list', Mojo.Event.listTap, this.listTappedHandler);
 
     // since "that" is global, maybe it's better to cleanup after scene became inactive.
     that = null;
@@ -388,7 +392,8 @@ ScheduleAssistant.prototype.handleCommand = function(event) {
 
 ScheduleAssistant.prototype.listTapped = function(event) {
     // fire up detail scene
-    this.controller.stageController.pushScene('scheduleDetail', {event: event.item});
+    //this.controller.stageController.pushScene('scheduleDetail', {event: event.item});
+    this.controller.stageController.assistant.pushMyScene('scheduleDetail', {event: event.item});
 }
 
 ScheduleAssistant.prototype.refreshSchedule = function() {
@@ -409,6 +414,8 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
                 var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
                 //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
                 //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
+                //var xcalURL = "https://frab.froscon.org/froscon2011/public/schedule.xcal"; // FrOSCon 2011 testing
+                //var xcalURL = "http://kallensee.name/~raphael/schedule.xcal"; // FrOSCon 2011 testing
 
                 var request = new Ajax.Request(xcalURL, {
 

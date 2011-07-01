@@ -143,52 +143,16 @@ ScheduleDetailAssistant.prototype.activate = function(event) {
     Mojo.Event.listen(
         this.controller.get("favItemCheckbox"),
         Mojo.Event.propertyChange,
-        this.favoritePropertyChanged.bind(this)
+        this.favoritePropertyChanged
     );
 
     /* add event handlers to listen to events from widgets */
 
     // set up toggle buttons
-    Mojo.Event.listen(this.controller.get('event-toggler-timelocation'), Mojo.Event.tap, function() {
-        that.locationDrawerModel.open = !that.locationDrawerModel.open;
-        that.controller.modelChanged(that.locationDrawerModel);
-
-        if( that.locationDrawerModel.open == true ) {
-            that.controller.get("event-toggler-timelocation").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
-        } else {
-            that.controller.get("event-toggler-timelocation").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
-        }
-    });
-    Mojo.Event.listen(this.controller.get('event-toggler-description'), Mojo.Event.tap, function() {
-        that.descriptionDrawerModel.open = !that.descriptionDrawerModel.open;
-        that.controller.modelChanged(that.descriptionDrawerModel);
-
-        if( that.descriptionDrawerModel.open == true ) {
-            that.controller.get("event-toggler-description").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
-        } else {
-            that.controller.get("event-toggler-description").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
-        }
-    });
-    Mojo.Event.listen(this.controller.get('event-toggler-more'), Mojo.Event.tap, function() {
-        that.moreDrawerModel.open = !that.moreDrawerModel.open;
-        that.controller.modelChanged(that.moreDrawerModel);
-
-        if( that.moreDrawerModel.open == true ) {
-            that.controller.get("event-toggler-more").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
-        } else {
-            that.controller.get("event-toggler-more").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
-        }
-    });
-    Mojo.Event.listen(this.controller.get('event-toggler-favorite'), Mojo.Event.tap, function() {
-        that.favoriteDrawerModel.open = !that.favoriteDrawerModel.open;
-        that.controller.modelChanged(that.favoriteDrawerModel);
-
-        if( that.favoriteDrawerModel.open == true ) {
-            that.controller.get("event-toggler-favorite").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
-        } else {
-            that.controller.get("event-toggler-favorite").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
-        }
-    });
+    Mojo.Event.listen(this.controller.get('event-toggler-timelocation'), Mojo.Event.tap, this.toggleTimelocation);
+    Mojo.Event.listen(this.controller.get('event-toggler-description'), Mojo.Event.tap, this.toggleDescription);
+    Mojo.Event.listen(this.controller.get('event-toggler-more'), Mojo.Event.tap, this.toggleMore);
+    Mojo.Event.listen(this.controller.get('event-toggler-favorite'), Mojo.Event.tap, this.toggleFavorite);
 
     // it seems like we have to re-set this variable after the scene was popped in again via back gesture
     that = this; // this allows accessing the assistant object from other scopes. Ugly!
@@ -201,13 +165,13 @@ ScheduleDetailAssistant.prototype.deactivate = function(event) {
     Mojo.Event.stopListening(
         this.controller.get("favItemCheckbox"),
         Mojo.Event.propertyChange,
-        this.favoritePropertyChanged.bind(this)
+        this.favoritePropertyChanged
     );
 
-    Mojo.Event.stopListening(this.controller.get('event-toggler-timelocation'), Mojo.Event.tap, function() {});
-    Mojo.Event.stopListening(this.controller.get('event-toggler-description'), Mojo.Event.tap, function() {});
-    Mojo.Event.stopListening(this.controller.get('event-toggler-more'), Mojo.Event.tap, function() {});
-    Mojo.Event.stopListening(this.controller.get('event-toggler-favorite'), Mojo.Event.tap, function() {});
+    Mojo.Event.stopListening(this.controller.get('event-toggler-timelocation'), Mojo.Event.tap, this.toggleTimelocation);
+    Mojo.Event.stopListening(this.controller.get('event-toggler-description'), Mojo.Event.tap, this.toggleDescription);
+    Mojo.Event.stopListening(this.controller.get('event-toggler-more'), Mojo.Event.tap, this.toggleMore);
+    Mojo.Event.stopListening(this.controller.get('event-toggler-favorite'), Mojo.Event.tap, this.toggleFavorite);
 
     // since "that" is global, maybe it's better to cleanup after scene became inactive.
     that = null;
@@ -217,8 +181,63 @@ ScheduleDetailAssistant.prototype.cleanup = function(event) {
     /* this function should do any cleanup needed before the scene is destroyed as
        a result of being popped off the scene stack */
 
+    Mojo.Event.stopListening(
+        this.controller.get("favItemCheckbox"),
+        Mojo.Event.propertyChange,
+        this.favoritePropertyChanged
+    );
+
+    Mojo.Event.stopListening(this.controller.get('event-toggler-timelocation'), Mojo.Event.tap, this.toggleTimelocation);
+    Mojo.Event.stopListening(this.controller.get('event-toggler-description'), Mojo.Event.tap, this.toggleDescription);
+    Mojo.Event.stopListening(this.controller.get('event-toggler-more'), Mojo.Event.tap, this.toggleMore);
+    Mojo.Event.stopListening(this.controller.get('event-toggler-favorite'), Mojo.Event.tap, this.toggleFavorite);
+
     // since "that" is global, maybe it's better to cleanup after scene became inactive.
     that = null;
+};
+
+ScheduleDetailAssistant.prototype.toggleTimelocation = function() {
+    that.locationDrawerModel.open = !that.locationDrawerModel.open;
+    that.controller.modelChanged(that.locationDrawerModel);
+
+    if( that.locationDrawerModel.open == true ) {
+        that.controller.get("event-toggler-timelocation").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
+    } else {
+        that.controller.get("event-toggler-timelocation").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
+    }
+};
+
+ScheduleDetailAssistant.prototype.toggleDescription = function() {
+    that.descriptionDrawerModel.open = !that.descriptionDrawerModel.open;
+    that.controller.modelChanged(that.descriptionDrawerModel);
+
+    if( that.descriptionDrawerModel.open == true ) {
+        that.controller.get("event-toggler-description").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
+    } else {
+        that.controller.get("event-toggler-description").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
+    }
+};
+
+ScheduleDetailAssistant.prototype.toggleMore = function() {
+    that.moreDrawerModel.open = !that.moreDrawerModel.open;
+    that.controller.modelChanged(that.moreDrawerModel);
+
+    if( that.moreDrawerModel.open == true ) {
+        that.controller.get("event-toggler-more").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
+    } else {
+        that.controller.get("event-toggler-more").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
+    }
+};
+
+ScheduleDetailAssistant.prototype.toggleFavorite = function() {
+    that.favoriteDrawerModel.open = !that.favoriteDrawerModel.open;
+    that.controller.modelChanged(that.favoriteDrawerModel);
+
+    if( that.favoriteDrawerModel.open == true ) {
+        that.controller.get("event-toggler-favorite").removeClassName("palm-arrow-closed").addClassName("palm-arrow-expanded");
+    } else {
+        that.controller.get("event-toggler-favorite").removeClassName("palm-arrow-expanded").addClassName("palm-arrow-closed");
+    }
 };
 
 ScheduleDetailAssistant.prototype.handleDbError = function(transaction, error) {
@@ -233,22 +252,22 @@ ScheduleDetailAssistant.prototype.handleDbError = function(transaction, error) {
 
         return;
     }
-}
+};
 
 ScheduleDetailAssistant.prototype.favoritePropertyChanged = function(event) {
 
     if( event.value == true ) {
         jQuery('#ScheduleDetailContainer .star').addClass('starActive');
-        this.event.favorite = true;
+        that.event.favorite = true;
     } else {
         jQuery('#ScheduleDetailContainer .star').removeClass('starActive');
-        this.event.favorite = false;
+        that.event.favorite = false;
     }
 
     // save the item
     //this.bucket.save( this.scheduleItems[i] );
     //console.log(this.scheduleItems[i].key);
-    this.bucket.save( this.event, function(r) {
+    that.bucket.save( that.event, function(r) {
         console.log( 'Updated item ' + r.key + ' from detail view.' );
     });
     //console.log(event.property+"#"+event.value+"##"+event.model.key+"##"+event.model.favorite+"###"+event.model.pbfeventid);
