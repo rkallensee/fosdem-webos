@@ -3,18 +3,5 @@
         <div class="star" id="star-#{id}"></div>
         <div class="title">#{-title}</div>
         <div class="preview">#{-time} in #{-location} von #{-attendee}</div>
-        <div id="eventDrawer-#{id}" class="schedule_event_drawer" x-mojo-element="Drawer">
-            <div class="preview">
-                #{-description}
-                <br /><br />
-                <center><img src="images/rooms/#{-locationImg}.png" alt="" /></center>
-                <br />
-                <a href="#{-url}">#{-url}</a>
-            </div>
-            <div class="checkAsFav">
-                <div x-mojo-element="ToggleButton" class="left" name="favItemCheckbox"></div>
-                <div class="title left">Als Favorit markieren</div>
-            </div>
-        </div>
     </div>
 </div>
