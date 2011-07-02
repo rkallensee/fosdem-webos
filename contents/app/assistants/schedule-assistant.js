@@ -119,6 +119,9 @@ ScheduleAssistant.prototype.activate = function(event) {
 
     // it seems like we have to re-set this variable after the scene was popped in again via back gesture
     that = this; // this allows accessing the assistant object from other scopes. Ugly!
+
+    // refresh fav star icons just in case the fav state was changed
+    this.refreshFavStars();
 }
 
 
