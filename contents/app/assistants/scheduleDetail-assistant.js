@@ -43,7 +43,8 @@ ScheduleDetailAssistant.prototype.setup = function() {
                 {
                     label: $L('Main menu'),
                     items: [ {label: $L('Menu'), submenu: 'view-submenu'} ]
-                }
+                },
+                { label: $L('back'), command: 'cmdSchedule' },
             ]
         }
     );
