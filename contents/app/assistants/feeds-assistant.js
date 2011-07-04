@@ -238,7 +238,7 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
         //console.log("***** SETTING ITEMS: " + items.length);
 
         if( that.activeFeed == 'webFeed' ) {
-            that.listModel.listTitle = $L('FOSDEM website');
+            that.listModel.listTitle = $L('FrOSCon website');
         }
         if( that.activeFeed == 'snAccount' ) {
             that.listModel.listTitle = $L('identi.ca account');
