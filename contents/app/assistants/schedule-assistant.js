@@ -175,7 +175,8 @@ ScheduleAssistant.prototype.handleDbError = function(transaction, error) {
                 }
             },
             title: $L("Welcome to the FOSDEM app!"),
-            message: $L("There is currently no schedule stored on your phone - do you want to download it now from FOSDEM server? This may take a while. Please remember to refresh it periodically."),
+            message: $L("There is currently no schedule stored on your phone - do you want to download "
+                +"it now from FOSDEM server? This may take a while. Please remember to refresh it periodically."),
             choices:[
                  {label:$L('Yes'), value:"refresh", type:'affirmative'},
                  {label:$L("No"), value:"well", type:'negative'}
@@ -373,7 +374,8 @@ ScheduleAssistant.prototype.handleCommand = function(event) {
                         }
                     },
                     title: $L("Refresh schedule"),
-                    message: $L("Do you really want to refresh the schedule stored on your device? An internet connection is required. The refresh may take a while. Favorites are preserved."),
+                    message: $L("Do you really want to refresh the schedule stored on your device? An internet "
+                        +"connection is required. The refresh may take a while. Favorites are preserved."),
                     choices:[
                          {label:$L('Yes'), value:"refresh", type:'affirmative'},
                          {label:$L("No"), value:"well", type:'negative'}
@@ -417,8 +419,7 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
                 var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
                 //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
                 //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
-                //var xcalURL = "https://frab.froscon.org/froscon2011/public/schedule.xcal"; // FrOSCon 2011 testing
-                //var xcalURL = "http://kallensee.name/~raphael/schedule.xcal"; // FrOSCon 2011 testing
+                //var xcalURL = "http://programm.froscon.org/2011/schedule.xcal"; // FrOSCon 2011
 
                 var request = new Ajax.Request(xcalURL, {
 
