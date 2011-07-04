@@ -18,8 +18,7 @@ ScheduleAssistant.prototype.setup = function() {
     //console.log("***** INITIALIZING SCHEDULE...");
 
     // this setting is very important: it stores the name of the conference!
-    //this.conference = 'FOSDEM';
-    this.conference = 'FOSDEM';
+    this.conference = 'FrOSCon';
     this.conferenceYear = '2011';
 
     this.controller.setupWidget(
@@ -174,9 +173,9 @@ ScheduleAssistant.prototype.handleDbError = function(transaction, error) {
                     that.spinner('off');
                 }
             },
-            title: $L("Welcome to the FOSDEM app!"),
+            title: $L("Welcome to the FrOSCon app!"),
             message: $L("There is currently no schedule stored on your phone - do you want to download "
-                +"it now from FOSDEM server? This may take a while. Please remember to refresh it periodically."),
+                +"it now from FrOSCon server? This may take a while. Please remember to refresh it periodically."),
             choices:[
                  {label:$L('Yes'), value:"refresh", type:'affirmative'},
                  {label:$L("No"), value:"well", type:'negative'}
@@ -416,10 +415,10 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
             } else {
                 console.log("***** STARTING AJAX REQUEST...");
 
-                var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
+                //var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
                 //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
                 //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
-                //var xcalURL = "http://programm.froscon.org/2011/schedule.xcal"; // FrOSCon 2011
+                var xcalURL = "http://programm.froscon.org/2011/schedule.xcal"; // FrOSCon 2011
 
                 var request = new Ajax.Request(xcalURL, {
 
