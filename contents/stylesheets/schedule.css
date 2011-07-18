@@ -31,12 +31,21 @@
     margin-top: 15px;
 }
 
+#ScheduleDetailContainer .palm-page-header .palm-page-header-wrapper .title {
+    font-size: 0.9em;
+}
+
 #ScheduleDetailContainer #event-drawer-description .preview,
 #ScheduleDetailContainer #event-drawer-more .preview {
     margin-left: 0;
     padding-left: 0;
     margin-right: 0;
     padding-right: 0;
+}
+
+#ScheduleDetailContainer #event-drawer-timelocation {
+    font-size: 1.3em;
+    color: #444444;
 }
 
 #ScheduleDetailContainer #event-drawer-favorite .title {
