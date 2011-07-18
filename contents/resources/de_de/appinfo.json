@@ -1,6 +1,6 @@
 {
     "id": "net.webpresso.fosdem",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "vendor": "webpresso.net",
     "type": "web",
     "main": "../../index.html",

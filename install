@@ -1,0 +1,5 @@
+#!/bin/bash
+palm-package contents/ \
+    && palm-install net.webpresso.fosdem*.ipk \
+    && palm-launch net.webpresso.fosdem \
+    && palm-log -f net.webpresso.fosdem
