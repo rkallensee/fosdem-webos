@@ -76,11 +76,11 @@ ScheduleDetailAssistant.prototype.setup = function() {
     jQuery('#ScheduleDetailContainer .event-date span').text(Mojo.Format.formatDate( dateObj, {date: 'long'} ));
     jQuery('#ScheduleDetailContainer .event-date strong').text(this.event.time);
     jQuery('#ScheduleDetailContainer .event-location strong').text(this.event.location);
-    if( this.event.locationImg != '' ) {
+    if( !this.event.locationImg.match(/(jpg|png|gif)/i) ) {
+        jQuery('#ScheduleDetailContainer .event-location-image img').hide();
+    } else {
         jQuery('#ScheduleDetailContainer .event-location-image img').attr('src', 'images/rooms/'+this.event.locationImg+'.png');
         jQuery('#ScheduleDetailContainer .event-location-image img').show();
-    } else {
-        jQuery('#ScheduleDetailContainer .event-location-image img').hide();
     }
     jQuery('#ScheduleDetailContainer .event-description').text(this.event.description);
     jQuery('#ScheduleDetailContainer .event-url').html(
