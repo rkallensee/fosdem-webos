@@ -1,6 +1,7 @@
 {
 
     "Campus map": "Campus-Karte",
+    "Driving directions": "Anfahrts-Karte",
     "Help / About": "Hilfe / Über",
     "Refresh": "Aktualisieren",
     "View options": "Anzeigeoptionen",
@@ -32,7 +33,7 @@
     "Tram map": "Straßenbahnkarte",
 
     "Welcome to the FrOSCon app!": "Willkommen in der FrOSCon-App!",
-    "There is currently no schedule stored on your phone - do you want to download it now from FrOSCon server? This may take a while. Please remember to refresh it periodically.": "Momentan ist kein Programm auf Ihrem Gerät gespeichert - wollen Sie es jetzt vom FOSDEM-Server laden? Dies benötigt etwas Zeit. Bitte denken Sie daran, das Programm regelmäßig zu aktualisieren.",
+    "There is currently no schedule stored on your phone - do you want to download it now from FrOSCon server? This may take a while. Please remember to refresh it periodically.": "Momentan ist kein Programm auf Ihrem Gerät gespeichert - wollen Sie es jetzt vom FrOSCon-Server laden? Dies benötigt etwas Zeit. Bitte denken Sie daran, das Programm regelmäßig zu aktualisieren.",
     "Refresh schedule": "Programm aktualisieren",
     "Do you really want to refresh the schedule stored on your device? An internet connection is required. The refresh may take a while. Favorites are preserved.": "Wollen Sie wirklich das auf Ihrem Gerät gespeicherte Programm aktualisieren? Eine Internet-Verbindung ist erforderlich. Das Aktualisieren benötigt etwas Zeit. Favoriten bleiben erhalten.",
 

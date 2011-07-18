@@ -64,7 +64,6 @@ FeedsAssistant.prototype.setup = function() {
 
     // set up sources
     this.feedSources = {
-        webFeed: 'http://fosdem.org/rss.xml',
         snAccount: 'http://identi.ca/api/statuses/user_timeline/76261.atom',
         snGroup: 'http://identi.ca/api/statusnet/groups/timeline/4495.atom',
         snTag: 'http://identi.ca/api/statusnet/tags/timeline/froscon.atom',
@@ -104,7 +103,7 @@ FeedsAssistant.prototype.setup = function() {
 
     that = this; // this allows accessing the assistent object from other scopes. Ugly!
 
-    this.showFeed( 'webFeed' );
+    this.showFeed( 'twAccount' );
 
     /* add event handlers to listen to events from widgets */
 };
@@ -199,7 +198,7 @@ FeedsAssistant.prototype.processIncomingFeedItems = function( transport ) {
         // set vars feed-type-specific, could be a bit handier...
         if( that.activeFeed == 'webFeed' ) {
             title = $L(jQuery(this).children('title').text());
-            author = 'FOSDEM team';
+            author = 'FrOSCon team';
             time = Date.parseHttpTimeFormat(jQuery(this).children('pubDate').text());
             url = jQuery(this).children('link').text();
         } else if( that.activeFeed == 'twTag'
