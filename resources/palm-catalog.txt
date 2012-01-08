@@ -217,6 +217,9 @@ This application provides you a schedule for FOSDEM (Free and Open Source Softwa
 This application is free software and licensed under the GPL v3.
 
 
+New in this version:
+Updated for FOSDEM 2012. There's now a separate scene for event details which also contains a room map where available.
+
 
 Support E-Mail: rk@webpresso.net
 Support Web: http://forge.webpresso.net/projects/fosdem-webos
@@ -236,6 +239,9 @@ Diese Anwendung ist vor allem ein Programmplan für die FOSDEM (Free and Open So
 
 Diese Anwendung ist freie Software und unter der GPL v3 lizensiert.
 
+
+Neu in dieser Version:
+Aktualisiert für die FOSDEM 2012. Vortrags-Details werden jetzt in einer eigenen Szene angezeigt, ebenfalls eine Raum-Karte (sofern vorhanden).
 
 
 Support E-Mail: rk@webpresso.net
