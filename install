@@ -1,0 +1,5 @@
+#!/bin/bash
+palm-package contents/ \
+    && palm-install net.webpresso.froscon*.ipk \
+    && palm-launch net.webpresso.froscon \
+    && palm-log -f net.webpresso.froscon

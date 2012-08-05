@@ -73,8 +73,17 @@ ScheduleDetailAssistant.prototype.setup = function() {
         dateDetails.minute,
         00
     );
+    var dateDetailsEnd = this.parseDate( this.event.dtend );
+    var dateObjEnd = new Date(
+        dateDetailsEnd.year,
+        dateDetailsEnd.month - 1, // as index!
+        dateDetailsEnd.day,
+        dateDetailsEnd.hour,
+        dateDetailsEnd.minute,
+        00
+    );
     jQuery('#ScheduleDetailContainer .event-date span').text(Mojo.Format.formatDate( dateObj, {date: 'long'} ));
-    jQuery('#ScheduleDetailContainer .event-date strong').text(this.event.time);
+    jQuery('#ScheduleDetailContainer .event-date strong').text(this.event.time + " - " + this.event.timeend);
     jQuery('#ScheduleDetailContainer .event-location strong').text(this.event.location);
     if( !this.event.locationImg.match(/(jpg|png|gif)/i) ) {
         jQuery('#ScheduleDetailContainer .event-location-image img').hide();

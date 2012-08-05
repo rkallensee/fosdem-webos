@@ -19,7 +19,7 @@ ScheduleAssistant.prototype.setup = function() {
 
     // this setting is very important: it stores the name of the conference!
     this.conference = 'FrOSCon';
-    this.conferenceYear = '2011';
+    this.conferenceYear = '2012';
 
     this.controller.setupWidget(
         Mojo.Menu.appMenu,
@@ -199,6 +199,16 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
     if( items[0] && items[0].location && !items[0].locationImg ) {
         for( var i=0; i<items.length; i++ ) {
             items[i].locationImg = items[i].location.toLowerCase().split('.').join('');
+            this.bucket.save( items[i] );
+        }
+    }
+    
+    // dynamically update end date and time properties sith start time
+    // to avoid errors (which are new since 0.2.8)
+    if( items[0] && items[0].location && !items[0].dtend ) {
+        for( var i=0; i<items.length; i++ ) {
+            items[i].dtend = items[i].dtstart;
+            items[i].timeend = items[i].time;
             this.bucket.save( items[i] );
         }
     }
@@ -418,7 +428,8 @@ ScheduleAssistant.prototype.refreshSchedule = function() {
                 //var xcalURL = "http://www.fosdem.org/schedule/xcal"; // FOSDEM
                 //var xcalURL = "http://www.fosdem.org/2010/schedule/xcal"; // FOSDEM 2010
                 //var xcalURL = "http://programm.froscon.org/2010/schedule.de.xcs"; // FrOSCon 2010
-                var xcalURL = "http://programm.froscon.org/2011/schedule.xcal"; // FrOSCon 2011
+                //var xcalURL = "http://programm.froscon.org/2011/schedule.xcal"; // FrOSCon 2011
+                var xcalURL = "http://programm.froscon.org/2012/schedule.xcal"; // FrOSCon 2012
 
                 var request = new Ajax.Request(xcalURL, {
 
@@ -479,6 +490,7 @@ ScheduleAssistant.prototype.processItem = function(i, results) {
     var item = jQuery(results).get(i);
 
     var dateObj = that.parseDate(jQuery(item).children('dtstart').text());
+    var dateObjEnd = that.parseDate(jQuery(item).children('dtend').text());
 
     var url = jQuery(item).children('url').text();
 
@@ -490,17 +502,25 @@ ScheduleAssistant.prototype.processItem = function(i, results) {
         // fixing defect urls from xcal
         url = url.replace( "/2011/schedule/", "" );
     }
+    if( url.indexOf( "/2011/schedule//2012/schedule/" ) != -1 ) {
+        // fixing defect urls from xcal
+        url = url.replace( "/2012/schedule/", "" );
+    }
 
     var isFavorite = jQuery.inArray(
         jQuery(item).children('uid').text(),
         that.tempFavorites
     ) >= 0; // returns -1 if not found, otherwise the index
 
+    // TODO: this currently doesn't handle events for multiple days. End time
+    // is considered to be on the same day as start time (at least for list view).
     this.scheduleItems.push({
         id: i,
         date: $L(dateObj.day + '. ' + dateObj.monthname + ' ' + dateObj.year),
         dtstart: $L(jQuery(item).children('dtstart').text()),
+        dtend: $L(jQuery(item).children('dtend').text()),
         time: $L(dateObj.hour + ':' + dateObj.minute),
+        timeend: $L(dateObjEnd.hour + ':' + dateObjEnd.minute),
         location: $L(jQuery(item).children('location').text()),
         locationImg: jQuery(item).children('location').text().toLowerCase().split('.').join(''),
         title: $L(jQuery(item).children('summary').text()),
