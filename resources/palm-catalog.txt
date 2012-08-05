@@ -249,3 +249,45 @@ Support Web: http://forge.webpresso.net/projects/fosdem-webos
 
 
 
+
+
+===== EN: FrOSCon 2012 =====
+
+Title: FrOSCon Schedule
+Company name: webpresso.net
+Primary Category: Productivity & Utilities
+Secondary Tags: Lists
+
+
+*UPDATE*: App updated for FrOSCon 2012!
+
+This application brings you a schedule for FrOSCon (Free and Open Source Software Conference) taking place on August 25th and 26st 2011 in Bonn, Germany. It downloads the schedule from FrOSCon server and saves it to your device for offline use (remember to refresh it since the schedule changes often). You can also set your favorite schedule items to plan your conference visit. There are also various maps included for your orientation as well as feeds for having a quick glance what's going on at identi.ca and Twitter.
+
+This application is free software and licensed under the GPL v3.
+
+
+
+Support E-Mail: rk@webpresso.net
+Support Web: http://forge.webpresso.net/projects/fosdem-webos
+
+
+
+
+===== DE: FrOSCon 2012 =====
+
+Title: FrOSCon Programm
+Company name: webpresso.net
+Primary Category: Produktivität
+Secondary Tags: Listen
+
+
+*UPDATE*: App aktualisiert für FrOSCon 2012!
+
+Diese Anwendung stellt Ihnen einen Programmplan für die FrOSCon (Free and Open Source Software Conference) zur Verfügung, die am 20. und 21. August 2011 in Bonn stattfindet. Sie lädt den Vortragsplan vom FrOSCon-Server und speichert ihn für spätere Offline-Benutzung auf dem Gerät (denken Sie daran, den Plan zu aktualisieren, da sich das Programm häufig ändert). Vorträge können als Favorit markiert werden. Außerdem sind einige Karten zur Orientierung enthalten sowie verschiedene Feeds von identi.ca und Twitter.
+
+Diese Anwendung ist freie Software und unter der GPL v3 lizensiert.
+
+
+
+Support E-Mail: rk@webpresso.net
+Support Web: http://forge.webpresso.net/projects/fosdem-webos
