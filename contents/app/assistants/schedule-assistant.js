@@ -19,7 +19,7 @@ ScheduleAssistant.prototype.setup = function() {
 
     // this setting is very important: it stores the name of the conference!
     this.conference = 'FOSDEM';
-    this.conferenceYear = '2012';
+    this.conferenceYear = '2013';
 
     this.controller.setupWidget(
         Mojo.Menu.appMenu,
@@ -202,7 +202,7 @@ ScheduleAssistant.prototype.setEventItems = function( items ) {
             this.bucket.save( items[i] );
         }
     }
-    
+
     // dynamically update end date and time properties sith start time
     // to avoid errors (which are new since 0.2.8)
     if( items[0] && items[0].location && !items[0].dtend ) {
@@ -504,6 +504,10 @@ ScheduleAssistant.prototype.processItem = function(i, results) {
     if( url.indexOf( "/2012/schedule//2012/schedule/" ) != -1 ) {
         // fixing defect urls from xcal
         url = url.replace( "/2012/schedule/", "" );
+    }
+    if( url.indexOf( "http:/fosdem.org" ) != -1 ) {
+        // fixing defect urls from xcal
+        url = url.replace( "http:/fosdem.org", "http://fosdem.org" );
     }
 
     var isFavorite = jQuery.inArray(

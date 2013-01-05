@@ -91,7 +91,9 @@ ScheduleDetailAssistant.prototype.setup = function() {
         jQuery('#ScheduleDetailContainer .event-location-image img').attr('src', 'images/rooms/'+this.event.locationImg);
         jQuery('#ScheduleDetailContainer .event-location-image img').show();
     }
-    jQuery('#ScheduleDetailContainer .event-description').text(this.event.description);
+    var description = this.event.description;
+    description = description.replace(/<(?:.|\n)*?>/gm, '');
+    jQuery('#ScheduleDetailContainer .event-description').text(description);
     jQuery('#ScheduleDetailContainer .event-url').html(
         '<a href="'+this.event.url+'">'+this.event.url+'</a>'
     );
